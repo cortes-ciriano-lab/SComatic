@@ -8,7 +8,7 @@ The code requires python version >=3.7.0 and R version >=3.5.0.
 
 The BAM file containing the sequencing reads for all cell types in a sample are split into cell-type-specific BAM files using precomputed cell type annotations. It requires to have the cell type barcode information in the tag bam file “CB”. 
 
-- The precomputed cell type annotation file must contain at least these two columns. Cell type annotations with white spaces and any special characters (e.g. ~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are currently not supported. Dashes and underscores (- _) are supported. Please ensure there are no white spaces in the file names.
+- The precomputed cell type annotation file must contain at least these two columns (Index for cell barcode ID and Cell_type for the precomputed cell annotation). Cell type annotations with white spaces and any special characters (e.g. ~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are currently not supported. Dashes and underscores (- _) are supported. Please ensure there are no white spaces in the file names.
 
 ```
 Index Cell_type
