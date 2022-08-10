@@ -165,9 +165,120 @@ optional arguments:
 
 - Run example
 ```python
-python $SCRIPT --tsv_folder $TSV \
+python MergeCounts/MergeBaseCellCounts.29032021.py --tsv_folder $TSV \
   --out_file $out2/${sample}.BaseCellCounts.AllCellTypes.tsv
 ```
 
+## Step 4: Detection of somatic variants
+The variant calling takes the merged base count matrix to finally provide a final list of somatic variants. It is split in two steps:
 
+### Step 4.1
+
+Firstly, it applies a set of hard filters and the beta-binomial tests to distinguish background error noise from potential somatic mutations. 
+
+- This script takes the next parameters:
+```python
+python BaseCellCalling/BaseCellCalling.step1.01102021.py --help
+usage: BaseCellCalling.step1.01102021.py [-h] --infile INFILE --outfile
+                                         OUTFILE --ref REF [--editing EDITING]
+                                         [--pon PON] [--min_cov MIN_COV]
+                                         [--min_cells MIN_CELLS]
+                                         [--min_ac_cells MIN_AC_CELLS]
+                                         [--min_ac_reads MIN_AC_READS]
+                                         [--max_cell_types MAX_CELL_TYPES]
+                                         [--min_cell_types MIN_CELL_TYPES]
+                                         [--fisher_cutoff FISHER_CUTOFF]
+                                         [--min_distance MIN_DISTANCE]
+                                         [--alpha1 ALPHA1] [--beta1 BETA1]
+                                         [--alpha2 ALPHA2] [--beta2 BETA2]
+
+Script to perform the scRNA somatic variant calling
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --infile INFILE       Input file with all samples merged in a single tsv
+  --outfile OUTFILE     Out file prefix
+  --ref REF             Reference fasta file (*fai must exist)
+  --editing EDITING     Editing file to be used to remove RNA-diting sites
+  --pon PON             Panel of normals (PoN) file to be used to remove
+                        germline and false positive calls
+  --min_cov MIN_COV     Minimum depth of coverage to consider a sample.
+                        [Default: 5]
+  --min_cells MIN_CELLS
+                        Minimum number of cells covering a site to consider a
+                        sample. [Default: 5]
+  --min_ac_cells MIN_AC_CELLS
+                        Minimum number of cells supporting the alternative
+                        allele to consider a mutation. [Default: 2]
+  --min_ac_reads MIN_AC_READS
+                        Minimum number of reads supporting the alternative
+                        allele to consider a mutation. [Default: 3]
+  --max_cell_types MAX_CELL_TYPES
+                        Maximum number of cell types carrying a mutation to
+                        make a somatic call. [Default: 1]
+  --min_cell_types MIN_CELL_TYPES
+                        Minimum number of cell types with enough coverage and
+                        cell to consider a site as callable [Default: 2]
+  --fisher_cutoff FISHER_CUTOFF
+                        P-value cutoff for the Fisher exact test performed to
+                        detect strand bias. Expected float value, if applied,
+                        we recommend 0.001. By default, this test is switched
+                        off with a value of 1 [Default: 1]
+  --min_distance MIN_DISTANCE
+                        Minimum distance allowed between potential somatic
+                        variants [Default: 5]
+  --alpha1 ALPHA1       Alpha parameter for beta distribution of read counts.
+                        [Default: 0.260288007167716]
+  --beta1 BETA1         Beta parameter for beta distribution of read counts.
+                        [Default: 173.94711910763732]
+  --alpha2 ALPHA2       Alpha parameter for beta distribution of cell counts.
+                        [Default: 0.08354121346569514]
+  --beta2 BETA2         Beta parameter for beta distribution of cell counts.
+                        [Default: 103.47683488327257]
+```
+
+- Run example:
+```python
+python BaseCellCalling/BaseCellCalling.step1.01102021.py \
+          --infile $TSV \
+          --outfile $out2/${sample} \
+          --ref $REF
+```
+
+In case that the user wants to estimate new beta-binomial parameters, this extra step should run (LINK).
+
+### Step 4.2 
+
+Secondly, it takes the output of the previous step and applies other filters based on external datasets (RNA editing and Panel of normals), as well as labelling clustered variants. High quality variants will show the label “PASS” in the FILTER column of the output file. All columns and other variables presented in the final file are described in the header of the file (vcf-like file).
+
+- This script has these parameters: 
+```python 
+python BaseCellCalling/BaseCellCalling.step2.01102021.py --help
+usage: BaseCellCalling.step2.01102021.py [-h] --infile INFILE --outfile
+                                         OUTFILE [--editing EDITING]
+                                         [--pon PON]
+                                         [--min_distance MIN_DISTANCE]
+
+Script to perform the scRNA somatic variant calling
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --infile INFILE       Input file with all samples merged in a single tsv
+  --outfile OUTFILE     Out file prefix
+  --editing EDITING     Editing file to be used to remove RNA-diting sites
+  --pon PON             Panel of normals (PoN) file to be used to remove
+                        germline and false positive calls
+  --min_distance MIN_DISTANCE
+                        Minimum distance allowed between potential somatic
+                        variants [Default: 5]
+```
+
+- Run example:
+```python
+python BaseCellCalling/BaseCellCalling.step2.01102021.py \
+          --infile $out2/${sample}.step1.targeted_regions.tsv \
+          --outfile $out2/${sample}.targeted_regions  \
+          --editing $editing \
+          --pon $PON
+```
 
