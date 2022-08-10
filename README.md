@@ -284,17 +284,17 @@ python BaseCellCalling/BaseCellCalling.step2.01102021.py \
 
 ## Other tools of interest
 
-### [Estimate new beta-binomial parameters](/docs/betabinomialestimation.md)
+#### [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
 To estimate the beta-binomial parameters in a new set of samples, take a look at [Beta-binomial estimation](/docs/betabinomialestimation.md) for more information.
 
-### Panel of normals
+#### [Building a new panel of normals](/docs/pon.md)
 You can access the panel of normals description here [PON](/docs/pon.md) for more information.
 
-### Get the number of callable sites per cell type
+#### Getting the number of callable sites per cell type
 
-### Get the number of callable sites per unique cell
+#### Getting the number of callable sites per unique cell
 
-### Get the genotype for each unique cell in variant sites
+#### Getting the genotype for each unique cell for the variant sites
 
-### Prepare output file for annovar annotation
+#### Preparing the output file for annovar annotation
 
