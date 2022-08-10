@@ -284,7 +284,7 @@ python BaseCellCalling/BaseCellCalling.step2.01102021.py \
 
 ## Other tools of interest
 
-### Estimate new beta-binomial parameters
+### [Estimate new beta-binomial parameters](/docs/betabinomialestimation.md)
 To estimate the beta-binomial parameters in a new set of samples, take a look at [Beta-binomial estimation](/docs/betabinomialestimation.md) for more information.
 
 ### Panel of normals
