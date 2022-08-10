@@ -302,7 +302,9 @@ python BaseCellCalling/BaseCellCalling.step2.01102021.py \
 ## Other tools of interest
 
 #### [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
-To estimate the beta-binomial parameters in a new set of samples, take a look at [Beta-binomial estimation](/docs/betabinomialestimation.md) for more information.
+
+SComatic models the background error rate using a Beta binomial distribution. Specifically, non-reference allele counts at homozygous reference sites are modelled using a binomial distribution with parameter P (error rate), which is a random variable that follows a beta distribution with parameters α and β. 
+Default values in the Step 4.1 are pre-computed with the data described in the manuscript. However, we provide scripts to allow the user to estimate new values using their own dataset. 
 
 #### [Building a new panel of normals](/docs/pon.md)
 You can access the panel of normals description here [PON](/docs/pon.md) for more information.
