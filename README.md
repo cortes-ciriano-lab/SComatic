@@ -307,7 +307,8 @@ SComatic models the background error rate using a Beta binomial distribution. Sp
 Default values in the Step 4.1 are pre-computed with the data described in the manuscript. However, we provide scripts to allow the user to estimate new values using their own dataset. 
 
 #### [Building a new panel of normals](/docs/pon.md)
-You can access the panel of normals description here [PON](/docs/pon.md) for more information.
+
+The panel of normals (PON) is used to detect systematic errors and germline contamination in the somatic mutation callset (used in the Step 4.2). The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a script to build a new PON using other datasets. 
 
 #### Getting the number of callable sites per cell type
 
