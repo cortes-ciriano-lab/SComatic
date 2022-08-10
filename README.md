@@ -290,3 +290,11 @@ To estimate the beta-binomial parameters in a new set of samples, take a look at
 ### Panel of normals
 You can access the panel of normals description here [PON](/docs/pon.md) for more information.
 
+### Get the number of callable sites per cell type
+
+### Get the number of callable sites per unique cell
+
+### Get the genotype for each unique cell in variant sites
+
+### Prepare output file for annovar annotation
+
