@@ -6,7 +6,22 @@ The code requires python version >=3.7.0 and R version >=3.5.0.
 
 ## Step 1: Split alignment file in cell type specific bams
 
-The BAM file containing the sequencing reads for all cell types in a sample are split into cell-type-specific BAM files using precomputed cell type annotations. It requires to have the cell type barcode information in the tag bam file “CB”. In addition, the precomputed cell type annotations should be provided in the next format: 
+The BAM file containing the sequencing reads for all cell types in a sample are split into cell-type-specific BAM files using precomputed cell type annotations. It requires to have the cell type barcode information in the tag bam file “CB”. 
+
+- The precomputed cell type annotation file must contain at least these two columns. Cell type annotations with white spaces and any special characters (e.g. ~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are currently not supported. Dashes and underscores (- _) are supported. Please ensure there are no white spaces in the file names.
+
+```
+Index Cell_type
+AAACCTGCATGCTAGT  Epithelial
+AAACCTGGTAGCCTAT  Epithelial
+AAACCTGGTTGTCGCG  Epithelial
+AAACCTGTCATGTGGT  Epithelial
+AAACCTGTCCTTGGTC  Epithelial
+AAACCTGTCGGATGTT  T_cell
+AAACCTGTCGTACGGC  T_cell
+AAACCTGTCTTGCAAG  T_cell
+AAACGGGAGACGCACA  T_cell
+```
 
 The command line to run this step is: 
 
