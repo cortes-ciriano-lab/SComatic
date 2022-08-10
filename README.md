@@ -109,7 +109,7 @@ python BaseCellCounter/BaseCellCounter.29032021.py --bam $cell_type_bam \
     --nprocs 16
 ```
 
-If running in an HPC cluster, one might want to compute the base count information at once. One can do that by running, for example:
+If running in an HPC cluster, one might want to compute the base count information for all cell types at once. One can do that by running, for example:
 
 ```python
 for bam in $(ls -d $out/*/cell_type_bams/*bam);do
