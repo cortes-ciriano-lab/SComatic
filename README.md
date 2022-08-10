@@ -144,4 +144,30 @@ for bam in $(ls -d $out/*/cell_type_bams/*bam);do
 done
 ```
 
+## Step 3: Merge all base counts in a multiple cell type matrix
+This script takes all computed cell type matrixes and merge them in a unique one (tsv format). All cell type matrixes must be in the same folder, and non-desired tsv files must be located in this folder. 
+
+- List of parameters:
+```python 
+python MergeCounts/MergeBaseCellCounts.29032021.py --help
+usage: MergeBaseCellCounts.29032021.py [-h] --tsv_folder TSV_FOLDER --out_file
+                                       OUT_FILE
+
+Script to merge the cell/base counts tsv files per cell type in only one
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --tsv_folder TSV_FOLDER
+                        Folder with cell/base count files (tsv) per cell type.
+                        Avoid not desired tsv files in this folder
+  --out_file OUT_FILE   Prefix out files
+```
+
+- Run example
+```python
+python $SCRIPT --tsv_folder $TSV \
+  --out_file $out2/${sample}.BaseCellCounts.AllCellTypes.tsv
+```
+
+
 
