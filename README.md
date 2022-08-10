@@ -1,7 +1,7 @@
 # SComatic
 A tool for detecting somatic variants in single cell data
 
-![Algorithm](/docs/Algorithm.png)
+![Algorithm](/docs/Algorithm.jpeg)
 
 ## Installation and requirements
 The code requires python version >=3.7.0 and R version >=3.5.0.
