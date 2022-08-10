@@ -36,7 +36,7 @@ optional arguments:
   --outdir OUTDIR  Out directory
 ```
 
-The precomputed cell type annotation file provided (with --meta parameter) must contain at least these two columns (Index for cell barcode ID and Cell_type for the precomputed cell annotation). Cell type annotations with white spaces and any special characters (e.g. ~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are currently not supported. Dashes and underscores (- _) are supported. Please ensure there are no white spaces in the file names.
+The precomputed cell type annotation file provided (with --meta parameter) must contain at least these two columns (Index for cell barcode ID and Cell_type for the precomputed cell annotation) and must be a tabulated file. Cell type annotations with white spaces and any special characters (e.g. ~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are currently not supported. Dashes and underscores (- _) are supported. Please ensure there are no white spaces in the file names.
 
 ```
 Index Cell_type
