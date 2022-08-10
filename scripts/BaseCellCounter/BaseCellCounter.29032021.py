@@ -321,7 +321,7 @@ def initialize_parser():
 	parser = argparse.ArgumentParser(description='Script to obtain a list of base and cell counts in scRNA bam file')
 	parser.add_argument('--bam', type=str, default=1, help='Tumor bam file to be analysed', required = True)
 	parser.add_argument('--ref', type=str, default=1, help='Reference genome. *fai must be available in the same folder as reference', required = True)
-	parser.add_argument('--chrom', type=str, help='Chromosome to be analysed. We highly recommend to run the variant calling by chromosomes. --chrom all to run in all chromosomes', required = True)
+	parser.add_argument('--chrom', type=str, help='Chromosome to be analysed. --chrom all to run in all chromosomes', required = True)
 	parser.add_argument('--out_folder', default = '.', help='Out folder', required = False)
 	parser.add_argument('--id', help='Prefix of out file. If provided, please use next format: *.[cell_type] . Example: sample1.t_cell. If not provided, it is taken from bam file', required = False)
 	parser.add_argument('--nprocs',default = 1, help='Number of processes [Default = 1]',required=False,type = int)
