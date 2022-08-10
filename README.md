@@ -282,3 +282,8 @@ python BaseCellCalling/BaseCellCalling.step2.01102021.py \
           --pon $PON
 ```
 
+## Other tools of interest
+
+### Panel of normals
+You can access the panel of normals description here [PON](/docs/pon.md) for more information.
+
