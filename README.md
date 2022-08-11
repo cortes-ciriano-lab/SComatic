@@ -1,16 +1,27 @@
 # SComatic
-A tool for detecting somatic variants in single cell data
+SComatic is a tool that provides functionalities to detect somatic single-nucleotide mutations in high-throughput single-cell genomics and transcriptomics data sets, such as single-cell RNA-seq and single-cell ATAC-seq.
+
+If you use SComatic (see **License** at the bottom of this page), please cite our publication:
+
+For further details on SComatic, its assumptions, limitations and applications, please see Muyas et al. 2022.
 
 ![Algorithm](/docs/Algorithm.jpeg)
 
 ## Installation and requirements
-The code requires python version >=3.7.0 and R version >=3.5.0.
+SComatic requires Python version >=3.7.0 and R version >=3.5.0.
+Additional dependencies can be installed by running the following commands:
 
-## Step 1: Split alignment file in cell type specific bams
+# Detection of somatic mutations in single-cell data sets using SComatic
+We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
 
-The BAM file containing the sequencing reads for all cell types in a sample are split into cell-type-specific BAM files using precomputed cell type annotations. It requires to have the cell type barcode information in the tag bam file “CB”. 
+- Aligned sequencing reads in BAM format for all cell types analysed. 
+- A file listing precomputed cell type annotations where each row reports the cell barcode and cell type for each cell analysed.
 
-The command line to run this step is: 
+SComatic consists of the following 4 steps, each of which is run using a different Python script as indicated below.
+
+## Step 1: Splitting alignment file in cell type specific bams
+The first step consists of splitting the BAM file containing aligned sequencing reads for cell types in a sample are  into cell-type-specific BAM files using precomputed cell type annotations. The BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger, 10x Genomics).
+Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the following parameters:
 
 - List of parameters:
 ```
@@ -38,7 +49,7 @@ optional arguments:
   --outdir OUTDIR  Out directory
 ```
 
-The precomputed cell type annotation file provided (with --meta parameter) must contain at least these two columns (Index for cell barcode ID and Cell_type for the precomputed cell annotation) and must be a tabulated file. Cell type annotations with white spaces and any special characters (e.g. ~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are currently not supported. Dashes and underscores (- _) are supported. Please ensure there are no white spaces in the file names.
+The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespace or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported.
 
 ```
 Index Cell_type
@@ -53,19 +64,22 @@ AAACCTGTCTTGCAAG  T_cell
 AAACGGGAGACGCACA  T_cell
 ```
 
-- Run example:
+- Example:
 ```python
+bam=
+sample=
+output_dir=
 python SplitBam/SplitBamCellTypes.01102021.py --bam $bam \
         --meta $out1/${sample}.cell_annotation.ready.txt \
         --id ${sample} \
         --n_trim 5 \
         --max_nM 5 \
-        --outdir $out2
+        --outdir $output_dir
  ```
  
 ## Step 2: Collecting base count information
 
-The count of each base in each cell type for every position in the genome is recorded in a base count matrix indexed by cell types and genomic coordinates
+Base count information for each cell type and for every position in the genome is recorded in a base count matrix indexed by cell types and genomic coordinates. 
 
 The command line to run this step is: 
 
@@ -114,19 +128,24 @@ optional arguments:
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
 
-- Run example:
+- Example:
 ```python
+cell_type_bam=
+BLACKLIST=
+output_dir=
+temp=
+REF=
 python BaseCellCounter/BaseCellCounter.29032021.py --bam $cell_type_bam \
     --ref $REF \
     --chrom all \
     --bed_out $BLACKLIST \
-    --out_folder $out2 \
+    --out_folder $output_dir \
     --min_bq 30 \
     --tmp_dir $temp \
     --nprocs 16
 ```
 
-If running in an HPC cluster, one might want to compute the base count information for all cell types at once. One can do that by running, for example:
+In our experience, when running SComatic in an HPC cluster it is most efficient to compute the base count information for all cell types at once. One can do that by running, for example:
 
 ```python
 for bam in $(ls -d $out/*/cell_type_bams/*bam);do
@@ -135,15 +154,15 @@ for bam in $(ls -d $out/*/cell_type_bams/*bam);do
   cell_type=$(basename $bam | awk -F'.' '{print $(NF-1)}')
 
   # Out for bam cell counter
-  out2=$(dirname $(dirname $bam))/base_cell_counter
-  mkdir -p $out2
+  output_dir=$(dirname $(dirname $bam))/base_cell_counter
+  mkdir -p $output_dir
 
   # Log folder
-  logs=$out2/logs
+  logs=$output_dir/logs
   mkdir -p $logs
 
   # Temp folder
-  temp=$out2/temp_${cell_type}
+  temp=$output_dir/temp_${cell_type}
   mkdir -p $temp
 
   # Command line to submit to cluster
@@ -151,7 +170,7 @@ for bam in $(ls -d $out/*/cell_type_bams/*bam);do
     --ref $REF \
     --chrom all \
     --bed_out $BLACKLIST \
-    --out_folder $out2 \
+    --out_folder $output_dir \
     --min_bq 30 \
     --tmp_dir $temp \
     --nprocs 16"
@@ -161,8 +180,8 @@ for bam in $(ls -d $out/*/cell_type_bams/*bam);do
 done
 ```
 
-## Step 3: Merge all base counts in a multiple cell type matrix
-This script takes all computed cell type matrixes and merge them in a unique one (tsv format). All cell type matrixes must be in the same folder, and non-desired tsv files must be located in this folder. 
+## Step 3: Merging  base count matrices
+In Step 3, SComatic takes as input base count matrices computed in Step 2 for all cell types analysed to merge them into a single base count matrix, whic is stored in tsv format. Individual base count matrices to be merged need to be stored in the same directory.
 
 - List of parameters:
 ```python 
@@ -180,20 +199,22 @@ optional arguments:
   --out_file OUT_FILE   Prefix out files
 ```
 
-- Run example
+- Example
 ```python
+output_dir=
+sample=
+TSV=
 python MergeCounts/MergeBaseCellCounts.29032021.py --tsv_folder $TSV \
-  --out_file $out2/${sample}.BaseCellCounts.AllCellTypes.tsv
+  --out_file $output_dir/${sample}.BaseCellCounts.AllCellTypes.tsv
 ```
 
-## Step 4: Detection of somatic variants
-The variant calling takes the merged base count matrix to finally provide a final list of somatic variants. It is split in two steps:
+## Step 4: Detection of somatic mutations
+The last step consists of running to scripts to call somatic mutations.
 
 ### Step 4.1
+SComatic applies a set of hard filters and Beta binomial tests to discount sites affected by recurrent technical artefacts as somatic mutations. 
 
-Firstly, it applies a set of hard filters and the beta-binomial tests to distinguish background error noise from potential somatic mutations. 
-
-- This script takes the next parameters:
+- List of parameters:
 ```python
 python BaseCellCalling/BaseCellCalling.step1.01102021.py --help
 usage: BaseCellCalling.step1.01102021.py [-h] --infile INFILE --outfile
@@ -254,21 +275,24 @@ optional arguments:
                         [Default: 103.47683488327257]
 ```
 
-- Run example:
+- Example:
 ```python
+TSV=
+output_dir=
+sample=
+REF=
 python BaseCellCalling/BaseCellCalling.step1.01102021.py \
           --infile $TSV \
-          --outfile $out2/${sample} \
+          --outfile $output_dir/${sample} \
           --ref $REF
 ```
 
-In case that the user wants to estimate new beta-binomial parameters, this extra step should run (LINK).
+In case that the user wants to estimate new Beta binomial parameters, this extra step should run (LINK).
 
 ### Step 4.2 
+Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of normals), and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. 
 
-Secondly, it takes the output of the previous step and applies other filters based on external datasets (RNA editing and Panel of normals), as well as labelling clustered variants. High quality variants will show the label “PASS” in the FILTER column of the output file. All columns and other variables presented in the final file are described in the header of the file (vcf-like file).
-
-- This script has these parameters: 
+- List of parameters: 
 ```python 
 python BaseCellCalling/BaseCellCalling.step2.01102021.py --help
 usage: BaseCellCalling.step2.01102021.py [-h] --infile INFILE --outfile
@@ -292,23 +316,24 @@ optional arguments:
 
 - Run example:
 ```python
+editing=
+output_dir=
+PON=
 python BaseCellCalling/BaseCellCalling.step2.01102021.py \
-          --infile $out2/${sample}.step1.targeted_regions.tsv \
-          --outfile $out2/${sample}.targeted_regions  \
+          --infile $output_dir/${sample}.step1.targeted_regions.tsv \
+          --outfile $output_dir/${sample}.targeted_regions  \
           --editing $editing \
           --pon $PON
 ```
 
-## Other tools of interest
+## [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
 
-#### [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
+SComatic models the background error rate of the technology used to generate the single-cell data (e.g., single-cell RNA-seq) using a Beta binomial distribution. Specifically, non-reference allele counts at homozygous reference sites are modelled using a binomial distribution with parameter P (error rate), which is a random variable that follows a Beta distribution with parameters α and β. 
+Default values for the Beta binomial tests used in  Step 4.1 are computed using the data sets described in the manuscript. Specifically, **XXXXX** However, we provide scripts to allow the user to reparameterize the Beta binomial using other data sets.
 
-SComatic models the background error rate using a Beta binomial distribution. Specifically, non-reference allele counts at homozygous reference sites are modelled using a binomial distribution with parameter P (error rate), which is a random variable that follows a beta distribution with parameters α and β. 
-Default values in the Step 4.1 are pre-computed with the data described in the manuscript. However, we provide scripts to allow the user to estimate new values using their own dataset. 
+## [Generating a custom Panel of Normals](/docs/pon.md)
 
-#### [Building a new panel of normals](/docs/pon.md)
-
-The panel of normals (PON) is used to detect systematic errors and germline contamination in the somatic mutation callset (used in the Step 4.2). The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a script to build a new PON using other datasets. 
+In Step 4.2, SComatic uses a Panel of Normals (PON) to detect systematic errors and germline contamination in the somatic mutation callset. The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a script to build a a custom PON using other data sets. 
 
 #### Getting the number of callable sites per cell type
 
@@ -318,3 +343,12 @@ The panel of normals (PON) is used to detect systematic errors and germline cont
 
 #### Preparing the output file for annovar annotation
 
+## Contact
+If you have any comments or suggestions about SComatic please raise an issue or contact us: 
+
+Francesc Mjuyas: fmuyas@ebi.ac.uk 
+
+Isidro Cortes-Ciriano: icortes@ebi.ac.uk
+
+## License
+**SComatic is free for academic use only**. If you are not a member of a public funded academic and/or education and/or research institution you must obtain a commercial license from EMBL Enterprise Management GmbH (EMBLEM); please email EMBLEM (info@embl-em.de).
