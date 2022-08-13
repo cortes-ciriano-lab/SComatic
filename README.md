@@ -346,7 +346,7 @@ In Step 4.2, SComatic uses a Panel of Normals (PON) to detect systematic errors 
 ## Contact
 If you have any comments or suggestions about SComatic please raise an issue or contact us: 
 
-Francesc Mjuyas: fmuyas@ebi.ac.uk 
+Francesc Muyas: fmuyas@ebi.ac.uk 
 
 Isidro Cortes-Ciriano: icortes@ebi.ac.uk
 
