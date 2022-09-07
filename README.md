@@ -11,6 +11,11 @@ For further details on SComatic, its assumptions, limitations and applications, 
 SComatic requires Python version >=3.7.0 and R version >=3.5.0.
 Additional dependencies can be installed by running the following commands:
 
+TODO
+datamash
+python libraries
+R
+
 # Detection of somatic mutations in single-cell data sets using SComatic
 We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
 
