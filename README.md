@@ -7,6 +7,8 @@ For further details on SComatic, its assumptions, limitations and applications, 
 
 ![Algorithm](/docs/Algorithm.jpeg)
 
+Created with BioRender.com 
+
 ## Installation and requirements
 SComatic requires Python version >=3.7.0 and R version >=3.5.0.
 Additional dependencies can be installed by running the following commands:
