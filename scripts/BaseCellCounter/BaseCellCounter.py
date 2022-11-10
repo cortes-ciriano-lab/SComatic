@@ -7,7 +7,6 @@ import pandas as pd
 import glob
 import os
 import sys
-import line_profiler
 import time
 
 def collect_result(result):
