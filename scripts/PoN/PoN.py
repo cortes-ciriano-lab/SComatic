@@ -5,7 +5,7 @@ import os
 import argparse
 import subprocess
 import time
-
+# datamash in environment
 
 def initialize_parser():
 	parser = argparse.ArgumentParser(description='Script to obtain a Panel Of Normals (PoN) file for scRNA somatic variant caller')
@@ -48,11 +48,13 @@ def main():
 	# Extract recurrent sites to construct PoNs
 	# Based on awk, grep, sort, and uniq unix tools
 
+	working_dir=os.path.dirname(outfile)
+
 	# Decide if remove prefix or not
 	if (rm_prefix == 'No'): 
-		command = "for file in $(cat %s);do BASE=$(basename $file); grep -v \"^#\" $file | awk -F'\\t' -v OFS='\\t' -v var=\"$BASE\" '{if ($6 != \".\") {print $1,$2,var}}'; done | datamash -s groupby 1,2 count 3 collapse 3 | awk -F'\\t' -v OFS='\\t' '{if ( $3 >=  %d ) {print $0}}' >> %s" % (in_tsv,min_samples,outfile) 
+		command = "for file in $(cat %s);do BASE=$(basename $file); grep -v \"^#\" $file | awk -F'\\t' -v OFS='\\t' -v var=\"$BASE\" '{if ($6 != \".\") {print $1,$2,var}}'; done | sort -k1,1 -k2,2 -T %s | datamash groupby 1,2 count 3 collapse 3 | awk -F'\\t' -v OFS='\\t' '{if ( $3 >=  %d ) {print $0}}' >> %s" % (in_tsv,working_dir,min_samples,outfile) 
 	else:
-		command = "for file in $(cat %s);do BASE=$(basename $file); grep -v \"^#\" $file | awk -F'\\t' -v OFS='\\t' -v var=\"$BASE\" '{if ($6 != \".\") {print $1,$2,var}}' | sed 's/^chr//g' ; done | datamash -s groupby 1,2 count 3 collapse 3 | awk -F'\\t' -v OFS='\\t' '{if ( $3 >=  %d ) {print $0}}' >> %s" % (in_tsv,min_samples,outfile) 
+		command = "for file in $(cat %s);do BASE=$(basename $file); grep -v \"^#\" $file | awk -F'\\t' -v OFS='\\t' -v var=\"$BASE\" '{if ($6 != \".\") {print $1,$2,var}}' | sed 's/^chr//g' ; done | sort -k1,1 -k2,2 -T %s | datamash groupby 1,2 count 3 collapse 3 | awk -F'\\t' -v OFS='\\t' '{if ( $3 >=  %d ) {print $0}}' >> %s" % (in_tsv,working_dir,min_samples,outfile) 
 
 	# Submit linux command
 	try:
