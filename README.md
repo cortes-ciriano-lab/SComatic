@@ -30,8 +30,8 @@ Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the
 
 - List of parameters:
 ```
-python SplitBam/SplitBamCellTypes.01102021.py --help
-usage: SplitBamCellTypes.01102021.py [-h] --bam BAM --meta META [--id ID]
+python SplitBam/SplitBamCellTypes.py --help
+usage: SplitBamCellTypes.py [-h] --bam BAM --meta META [--id ID]
                                      [--tissue TISSUE] [--max_nM MAX_NM]
                                      [--min_MQ MIN_MQ] [--n_trim N_TRIM]
                                      [--outdir OUTDIR]
@@ -74,7 +74,7 @@ AAACGGGAGACGCACA  T_cell
 bam=
 sample=
 output_dir=
-python SplitBam/SplitBamCellTypes.01102021.py --bam $bam \
+python SplitBam/SplitBamCellTypes.py --bam $bam \
         --meta $out1/${sample}.cell_annotation.ready.txt \
         --id ${sample} \
         --n_trim 5 \
@@ -90,8 +90,8 @@ The command line to run this step is:
 
 - List of parameters:
 ```
-python BaseCellCounter/BaseCellCounter.29032021.py --help
-usage: BaseCellCounter.29032021.py [-h] --bam BAM --ref REF --chrom CHROM
+python BaseCellCounter/BaseCellCounter.py --help
+usage: BaseCellCounter.py [-h] --bam BAM --ref REF --chrom CHROM
                                    [--out_folder OUT_FOLDER] [--id ID]
                                    [--nprocs NPROCS] [--bin BIN] [--bed BED]
                                    [--bed_out BED_OUT] [--min_ac MIN_AC]
@@ -140,7 +140,7 @@ BLACKLIST=
 output_dir=
 temp=
 REF=
-python BaseCellCounter/BaseCellCounter.29032021.py --bam $cell_type_bam \
+python BaseCellCounter/BaseCellCounter.py --bam $cell_type_bam \
     --ref $REF \
     --chrom all \
     --bed_out $BLACKLIST \
@@ -190,8 +190,8 @@ In Step 3, SComatic takes as input base count matrices computed in Step 2 for al
 
 - List of parameters:
 ```python 
-python MergeCounts/MergeBaseCellCounts.29032021.py --help
-usage: MergeBaseCellCounts.29032021.py [-h] --tsv_folder TSV_FOLDER --out_file
+python MergeCounts/MergeBaseCellCounts.py --help
+usage: MergeBaseCellCounts.py [-h] --tsv_folder TSV_FOLDER --out_file
                                        OUT_FILE
 
 Script to merge the cell/base counts tsv files per cell type in only one
@@ -209,7 +209,7 @@ optional arguments:
 output_dir=
 sample=
 TSV=
-python MergeCounts/MergeBaseCellCounts.29032021.py --tsv_folder $TSV \
+python MergeCounts/MergeBaseCellCounts.py --tsv_folder $TSV \
   --out_file $output_dir/${sample}.BaseCellCounts.AllCellTypes.tsv
 ```
 
@@ -221,8 +221,8 @@ SComatic applies a set of hard filters and Beta binomial tests to discount sites
 
 - List of parameters:
 ```python
-python BaseCellCalling/BaseCellCalling.step1.01102021.py --help
-usage: BaseCellCalling.step1.01102021.py [-h] --infile INFILE --outfile
+python BaseCellCalling/BaseCellCalling.step1.py --help
+usage: BaseCellCalling.step1.py [-h] --infile INFILE --outfile
                                          OUTFILE --ref REF [--editing EDITING]
                                          [--pon PON] [--min_cov MIN_COV]
                                          [--min_cells MIN_CELLS]
@@ -286,7 +286,7 @@ TSV=
 output_dir=
 sample=
 REF=
-python BaseCellCalling/BaseCellCalling.step1.01102021.py \
+python BaseCellCalling/BaseCellCalling.step1.py \
           --infile $TSV \
           --outfile $output_dir/${sample} \
           --ref $REF
@@ -299,8 +299,8 @@ Scomatic takes the output of the previous step (4.1) and applies additional filt
 
 - List of parameters: 
 ```python 
-python BaseCellCalling/BaseCellCalling.step2.01102021.py --help
-usage: BaseCellCalling.step2.01102021.py [-h] --infile INFILE --outfile
+python BaseCellCalling/BaseCellCalling.step2.py --help
+usage: BaseCellCalling.step2.py [-h] --infile INFILE --outfile
                                          OUTFILE [--editing EDITING]
                                          [--pon PON]
                                          [--min_distance MIN_DISTANCE]
@@ -324,7 +324,7 @@ optional arguments:
 editing=
 output_dir=
 PON=
-python BaseCellCalling/BaseCellCalling.step2.01102021.py \
+python BaseCellCalling/BaseCellCalling.step2.py \
           --infile $output_dir/${sample}.step1.targeted_regions.tsv \
           --outfile $output_dir/${sample}.targeted_regions  \
           --editing $editing \
