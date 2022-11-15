@@ -24,11 +24,6 @@ pip install -r requirements.txt
 Rscript r_requirements_install.R
 ```
 
-TODO
-datamash
-python libraries
-R
-
 # Detection of somatic mutations in single-cell data sets using SComatic
 We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
 
