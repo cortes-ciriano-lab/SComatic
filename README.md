@@ -11,7 +11,7 @@ Created with BioRender.com
 
 ## Installation and requirements
 SComatic requires Python version >=3.7.0, R version >=3.6.0, samtools (https://github.com/samtools/samtools) and datamash (>=v1.1.0, only for building your own panel of normals). 
-- We strongly recommend to build your own conda environment with the next lines:
+- We strongly recommend to build your own conda[https://docs.conda.io/en/latest/] environment with the next lines:
 ```
 conda create -n SComatic -c bioconda python=3.7 r-base=3.6.1 samtools datamash
 conda activate SComatic
