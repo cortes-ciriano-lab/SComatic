@@ -23,6 +23,11 @@ pip install -r requirements.txt
 ```R
 Rscript r_requirements_install.R
 ```
+- Unpack PoN (Panel Of Normal) files:
+```
+gunzip PoNs/PoN.scRNAseq.hg38.tsv.gz
+gunzip PoNs/PoN.scATACseq.hg38.tsv.gz 
+```
 
 # Detection of somatic mutations in single-cell data sets using SComatic
 We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
