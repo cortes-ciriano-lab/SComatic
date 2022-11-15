@@ -10,7 +10,7 @@ For further details on SComatic, its assumptions, limitations and applications, 
 Created with BioRender.com 
 
 ## Installation and requirements
-SComatic requires Python version >=3.7.0 and R version >=3.5.0.
+SComatic requires Python version >=3.7.0, R version >=3.5.0, samtools (https://github.com/samtools/samtools) and datamash (>=v1.1.0, only for building your own panel of normals).
 Additional dependencies can be installed by running the following commands:
 
 TODO
