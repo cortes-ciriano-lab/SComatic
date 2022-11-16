@@ -1,5 +1,5 @@
 ## Panel of normals (PoN)
-To build your Panel of normals (PoN), the user needs to provide a tsv (or txt) file listing the full path to all the desired files/samples obtained by BaseCellCalling.step1.py. The file should look like next:
+To build your Panel of normals (PoN), the user needs to provide (--in_tsv) a tsv (or txt) file listing the full path to all the desired files/samples obtained by BaseCellCalling.step1.py. The file should look like next:
 
 ```
 /path/to/sample1.basecalling.step1.tsv
