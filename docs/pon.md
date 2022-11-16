@@ -1,5 +1,15 @@
 ## Panel of normals (PoN)
-To build your own Panel of normals (PoN), you need to provide a tsv file with all the samples (obtained by *BaseCellCalling.step1.py*) that the user wants to have included in the custom PoN. 
+To build your Panel of normals (PoN), the user needs to provide a tsv (or txt) file listing the full path to all the desired files/samples obtained by BaseCellCalling.step1.py. The file should look like next:
+
+```
+/path/to/sample1.basecalling.step1.tsv
+/path/to/sample2.basecalling.step1.tsv
+/path/to/sample3.basecalling.step1.tsv
+/path/to/sample4.basecalling.step1.tsv
+/path/to/sample5.basecalling.step1.tsv
+```
+
+The python script take these parameters:
 
 ```
 python scripts/PoN/PoN.py --help
