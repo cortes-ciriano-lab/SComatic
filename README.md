@@ -351,7 +351,7 @@ Default values for the Beta binomial tests used in  Step 4.1 are computed using 
 
 ## [Generating a custom Panel of Normals](/docs/pon.md)
 
-In Step 4.2, SComatic uses a Panel of Normals (PON) to detect systematic errors and germline contamination in the somatic mutation callset. The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a script to build a a custom PON using other data sets. 
+In Step 4.2, SComatic uses a Panel of Normals (PON) to detect systematic errors and germline contamination in the somatic mutation callset. The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome) (check folder PoNs). However, SComatic provides a script to build a a custom PON using other data sets. 
 
 #### Getting the number of callable sites per cell type
 
