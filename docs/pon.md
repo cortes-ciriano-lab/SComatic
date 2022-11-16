@@ -9,7 +9,7 @@ To build your Panel of normals (PoN), the user needs to provide a tsv (or txt) f
 /path/to/sample5.basecalling.step1.tsv
 ```
 
-The python script take these parameters:
+The python script takes these parameters:
 
 ```
 python scripts/PoN/PoN.py --help
