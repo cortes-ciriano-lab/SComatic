@@ -1,4 +1,5 @@
-## Panel of normals (PON)
+## Panel of normals (PoN)
+To build your own Panel of normals (PoN), you need to provide a tsv file with all the samples (obtained by *BaseCellCalling.step1.py*) that the user wants to have included in the custom PoN. 
 
 ```
 python scripts/PoN/PoN.py --help
