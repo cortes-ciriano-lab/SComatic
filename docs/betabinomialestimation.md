@@ -1,5 +1,22 @@
 ## Estimating parameters for the beta-binomial distribution
 
+To estimate the Beta-binomial distribution parameters in new data, the user needs to provide (--in_tsv) a tsv (or txt) file listing the full path to all desired sample-cell-type (ideally cancer-free samples) obtained by BaseCellCounter.py. The file should look like next:
+
+```
+/path/to/sample1.epithelial.tsv
+/path/to/sample1.T_cells.step1.tsv
+/path/to/sample1.myeloid.step1.tsv
+/path/to/sample2.epithelial.tsv
+/path/to/sample2.T_cells.step1.tsv
+/path/to/sample2.myeloid.step1.tsv
+/path/to/sample3.epithelial.tsv
+/path/to/sample3.T_cells.step1.tsv
+/path/to/sample3.myeloid.step1.tsv
+```
+
+The python script takes these parameters:
+
+
 ```
 python scripts/BetaBinEstimation/BetaBinEstimation.py --help
 usage: BetaBinEstimation.py [-h] --in_tsv IN_TSV --outfile OUTFILE
