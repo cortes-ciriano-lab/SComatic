@@ -344,7 +344,7 @@ python BaseCellCalling/BaseCellCalling.step2.py \
           --pon $PON
 ```
 
-### [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
+## [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
 
 SComatic models the background error rate of the technology used to generate the single-cell data (e.g., single-cell RNA-seq) using a Beta binomial distribution. Specifically, non-reference allele counts at homozygous reference sites are modelled using a binomial distribution with parameter P (error rate), which is a random variable that follows a Beta distribution with parameters α and β. 
 Default values for the Beta binomial tests used in  Step 4.1 are computed using the data sets described in the manuscript. However, we provide scripts to allow the user to reparameterize the Beta binomial using other data sets.
