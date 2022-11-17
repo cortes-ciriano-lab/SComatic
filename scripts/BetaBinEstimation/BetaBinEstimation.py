@@ -150,10 +150,10 @@ def betabin_estimation(CCounts):
 
 
 def initialize_parser():
-	parser = argparse.ArgumentParser(description='Script to obtain the alpha and beta parameters of the beta-binomial distribution for the scRNA caller')
-	parser.add_argument('--in_tsv', type=str, help='File listing the tsv files to be used for the beta-binomial fitting (obtained with BaseCellCounter script)', required = True)   
-	parser.add_argument('--outfile', type=str, help='Report with the beta-binomial fitting results', required = True)
-	parser.add_argument('--n_sites', type=int, default = 500000, help='Approximate number of sites to be used for distribution fitting [Default: 500000]', required = False)
+	parser = argparse.ArgumentParser(description='Script to estimate the Beta-binomial distribution parameters (alpha and beta) to be used afterwards in the BaseCellCalling.step1.py')
+	parser.add_argument('--in_tsv', type=str, help='File listing the tsv files to be used for the beta-binomial fitting (obtained with BaseCellCounter.py script)', required = True)   
+	parser.add_argument('--outfile', type=str, help='Report with the estimated Beta-binomial parameters', required = True)
+	parser.add_argument('--n_sites', type=int, default = 500000, help='Approximate number of sites to be used for fitting the Beta-binomial distribution [Default: 500000]', required = False)
 	parser.add_argument('--seed', type=int, default = 1992, help='Random seed for computation [Default: 1992]', required = False)
 	return (parser)
 
