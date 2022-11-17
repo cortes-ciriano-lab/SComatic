@@ -8,7 +8,7 @@ import time
 # datamash in environment
 
 def initialize_parser():
-	parser = argparse.ArgumentParser(description='Script to obtain a Panel Of Normals (PoN) file for scRNA somatic variant caller')
+	parser = argparse.ArgumentParser(description='Script to build a SComatic Panel Of Normals (PoNs)')
 	parser.add_argument('--in_tsv', type=str, help='File with tsv files to be used for final PoN construction (ideally files obtained in BaseCellCalling.step1.py)', required = True)   
 	parser.add_argument('--out_file', type=str, help='PoN output file name', required = True)
 	parser.add_argument('--min_samples', type=int, default = 2, help='Minimum number of significant samples to consider a site in the PoN. [Default: 2]', required = False)
