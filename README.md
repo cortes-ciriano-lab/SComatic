@@ -354,14 +354,12 @@ Default values for the Beta binomial tests used in  Step 4.1 are computed using 
 In Step 4.2, SComatic uses a Panel of Normals (PON) to detect systematic errors and germline contamination in the somatic mutation callset. The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome) (check folder PoNs). However, SComatic provides a [script](/docs/pon.md) to build a a custom PON using other data sets. 
 
 ## [Other SComatic functionalities](/docs/OtherFunctionalities.md)
+SComatic has different extra functionalities to further play with the results, which are described in detail [here](/docs/OtherFunctionalities.md):
 
-#### Getting the number of callable sites per cell type
-
-#### Getting the number of callable sites per unique cell
-
-#### Getting the genotype for each unique cell for the variant sites
-
-#### Preparing the output file for annovar annotation
+- Getting the number of callable sites per cell type
+- Getting the number of callable sites per unique cell
+- Getting the genotype for each unique cell for the variant sites
+- Preparing the output file for annovar annotation
 
 ## Contact
 If you have any comments or suggestions about SComatic please raise an issue or contact us: 
