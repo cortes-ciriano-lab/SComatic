@@ -16,8 +16,7 @@ python scripts/PoN/PoN.py --help
 usage: PoN.py [-h] --in_tsv IN_TSV --out_file OUT_FILE
               [--min_samples MIN_SAMPLES] [--rm_prefix {Yes,No}]
 
-Script to obtain a Panel Of Normals (PoN) file for scRNA somatic variant
-caller
+Script to build a SComatic Panel Of Normals (PoNs)
 
 optional arguments:
   -h, --help            show this help message and exit
