@@ -293,11 +293,10 @@ def concatenate_sort_temp_files_and_write(out_file, tmp_dir):
 		print ('No temporary files found')
 
 
-
 def initialize_parser():
 	parser = argparse.ArgumentParser(description='Script to get the alleles observed in each unique cell for the variant sites')
 	parser.add_argument('--bam', type=str, default=1, help='Tumor bam file to be analysed', required = True)
-	parser.add_argument('--variant_file', type=str, default=1, help='File with variants to search', required = True)
+	parser.add_argument('--infile', type=str, default=1, help='Base calling file (obtained by BaseCellCalling.step2.py), ideally only the PASS variants', required = True)
 	parser.add_argument('--ref', type=str, default=1, help='Reference genome. *fai must be available in the same folder as reference', required = True)
 	parser.add_argument('--meta', type=str, default=1, help='Metadata with cell barcodes per cell type', required = True)
 	parser.add_argument('--out_file', default = 'Matrix.tsv', help='Out file', required = False)
@@ -327,7 +326,7 @@ def main():
 	MIN_MQ = args.min_mq
 	tmp_dir = args.tmp_dir
 	meta_file = args.meta
-	variant_file = args.variant_file
+	variant_file = args.infile
 	tissue = args.tissue
 	BQ = args.min_bq
 	MQ = args.min_mq
