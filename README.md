@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ```R
 Rscript r_requirements_install.R
 ```
-- Unpack PoN (Panel Of Normal) files:
+- Unpack PoN (Panel of Normals) files:
 ```
 gunzip PoNs/PoN.scRNAseq.hg38.tsv.gz
 gunzip PoNs/PoN.scATACseq.hg38.tsv.gz 
@@ -351,10 +351,10 @@ Default values for the Beta binomial tests used in  Step 4.1 are computed using 
 
 ## [Generating a custom Panel of Normals](/docs/pon.md)
 
-In Step 4.2, SComatic uses a Panel of Normals (PON) to detect systematic errors and germline contamination in the somatic mutation callset. The PON provided in this repository is computed using the data described in the manuscript (Hg38 reference genome) (check folder PoNs). However, SComatic provides a [script](/docs/pon.md) to build a a custom PON using other data sets. 
+In Step 4.2, SComatic uses a Panel of Normals (PoN) to detect systematic errors and germline contamination in the somatic mutation callset. The PoN provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a [script](/docs/pon.md) to build a custom PoN using other data sets. 
 
 ## [Other SComatic functionalities](/docs/OtherFunctionalities.md)
-SComatic has different extra functionalities to further play with the results, which are described in detail [here](/docs/OtherFunctionalities.md):
+SComatic provides the following additional functionalities, which are described in detail [here](/docs/OtherFunctionalities.md).
 
 - Getting the number of callable sites per cell type
 - Getting the number of callable sites per unique cell
