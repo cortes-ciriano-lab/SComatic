@@ -96,6 +96,3 @@ optional arguments:
   --tissue TISSUE       Tissue of the sample
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
-
-
-Preparing the output file for annovar annotation
