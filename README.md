@@ -28,6 +28,11 @@ Rscript r_requirements_install.R
 gunzip PoNs/PoN.scRNAseq.hg38.tsv.gz
 gunzip PoNs/PoN.scATACseq.hg38.tsv.gz 
 ```
+- Unpack RNA editing file:
+```
+gunzip RNAediting/AllEditingSites.hg38.txt.gz
+```
+In case of using this file, please cite these articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
 
 # Detection of somatic mutations in single-cell data sets using SComatic
 We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
@@ -223,7 +228,7 @@ optional arguments:
 In case that the user wants to estimate new Beta binomial parameters, this extra step should run (LINK).
 
 ### Step 4.2 
-Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of normals) , and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. In case of using the provided [RNA editing](RNAediting) file, please cite these articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585) .
+Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of normals) , and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. In case of using the provided [RNA editing](RNAediting) file, please cite these articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
 
 - List of parameters: 
 ```python 
