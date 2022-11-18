@@ -1,7 +1,7 @@
 # SComatic
 SComatic is a tool that provides functionalities to detect somatic single-nucleotide mutations in high-throughput single-cell genomics and transcriptomics data sets, such as single-cell RNA-seq and single-cell ATAC-seq.
 
-If you use SComatic (see **License** at the bottom of this page), please cite our publication:
+If you use SComatic (see **License** at the bottom of this page), please cite our publication Muyas et al. 2022.
 
 For further details on SComatic, its assumptions, limitations and applications, please see Muyas et al. 2022.
 
@@ -11,7 +11,7 @@ For further details on SComatic, its assumptions, limitations and applications, 
 
 ## Installation and requirements
 SComatic requires Python version >=3.7.0, R version >=3.6.0, [samtools](https://github.com/samtools/samtools) and datamash (>=v1.1.0, only for building your own panel of normals). 
-- We strongly recommend to build your own [conda](https://docs.conda.io/en/latest/) environment with the next lines:
+- We strongly recommend to build your own [conda](https://docs.conda.io/en/latest/) environment as follows:
 ```
 conda create -n SComatic -c bioconda python=3.7 r-base=3.6.1 samtools datamash
 conda activate SComatic
