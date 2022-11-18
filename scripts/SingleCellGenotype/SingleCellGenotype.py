@@ -295,7 +295,7 @@ def concatenate_sort_temp_files_and_write(out_file, tmp_dir):
 
 
 def initialize_parser():
-	parser = argparse.ArgumentParser(description='Script to obtain a list of cell barcodes and cells types carrying specific mutations')
+	parser = argparse.ArgumentParser(description='Script to get the alleles observed in each unique cell for the variant sites')
 	parser.add_argument('--bam', type=str, default=1, help='Tumor bam file to be analysed', required = True)
 	parser.add_argument('--variant_file', type=str, default=1, help='File with variants to search', required = True)
 	parser.add_argument('--ref', type=str, default=1, help='Reference genome. *fai must be available in the same folder as reference', required = True)
@@ -377,31 +377,6 @@ if __name__ == '__main__':
 	main()
 	stop = timeit.default_timer()
 	print ("Computation time: " + str(round(stop - start)) + ' seconds')
-
-
-# variant_file='/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/CRC_Nat_Gen/results/scrEXT001/somatic_calls/scrEXT001.somatic.calling.pass.filtered_with_r.tsv'
-# variant_file='/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/CRC_Nat_Gen/results/scrEXT001/somatic_calls/117284486.tsv'
-# meta_file='/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/CRC_Nat_Gen/results/scrEXT001/scrEXT001.cell_annotation.index_corrected.txt'
-# window=50000
-# tissue=None
-# BAM='/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/CRC_Nat_Gen/SC001/scrEXT001_hg19_out2_16/possorted_genome_bam.bam'
-# #BAM='/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/CRC_Nat_Gen/results/scrEXT001/cell_type_bams/scrEXT001.Stromal_cells.bam'
-# FASTA='/nfs/research/icortes/DATA/hg38/Homo_sapiens_assembly38.fasta'
-# tmp_dir='temp_Dir'
-# MQ=255
-# BQ=20
-# outfile='temp_matrix.txt'
-
-
-
-
-# META_DICT, ALL_CELL_TYPES = meta_to_dict(meta_file,tissue)
-# DICT_VARIANTS = build_dict_variants(variant_file,window)
-
-# for row in DICT_VARIANTS.keys():
-# 	run_interval(row,DICT_VARIANTS,META_DICT,BAM,FASTA,tmp_dir,BQ,MQ)
-
-# concatenate_sort_temp_files_and_write(outfile, tmp_dir)
 
 
 
