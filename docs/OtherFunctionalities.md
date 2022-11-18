@@ -62,6 +62,40 @@ optional arguments:
                         Default = 255
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
+
 Getting the genotype for each unique cell for the variant sites
+```
+python scripts/SingleCellGenotype/SingleCellGenotype.py --help
+usage: SingleCellGenotype.py [-h] --bam BAM --infile INFILE --ref REF --meta
+                             META [--out_file OUT_FILE] [--alt_flag {Alt,All}]
+                             [--nprocs NPROCS] [--bin BIN] [--min_bq MIN_BQ]
+                             [--min_mq MIN_MQ] [--tissue TISSUE]
+                             [--tmp_dir TMP_DIR]
+
+Script to get the alleles observed in each unique cell for the variant sites
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --bam BAM             Tumor bam file to be analysed
+  --infile INFILE       Base calling file (obtained by
+                        BaseCellCalling.step2.py), ideally only the PASS
+                        variants
+  --ref REF             Reference genome. *fai must be available in the same
+                        folder as reference
+  --meta META           Metadata with cell barcodes per cell type
+  --out_file OUT_FILE   Out file
+  --alt_flag {Alt,All}  Flag to search for cells carrying the expected alt
+                        variant (Alt) or all cells independent of the alt
+                        allele observed (All)
+  --nprocs NPROCS       Number of processes [Default = 1]
+  --bin BIN             Bin size for running the analysis [Default 50000]
+  --min_bq MIN_BQ       Minimum base quality permited for the base counts.
+                        Default = 30
+  --min_mq MIN_MQ       Minimum mapping quality required to analyse read.
+                        Default = 255
+  --tissue TISSUE       Tissue of the sample
+  --tmp_dir TMP_DIR     Temporary folder for tmp files
+```
+
 
 Preparing the output file for annovar annotation
