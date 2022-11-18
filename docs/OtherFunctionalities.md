@@ -24,6 +24,44 @@ optional arguments:
 
 Getting the number of callable sites per unique cell
 
+```
+python scripts/SitesPerCell/SitesPerCell.py --help
+usage: SitesPerCell.py [-h] --bam BAM --ref REF [--infile INFILE]
+                       [--min_ct1 MIN_CT1] [--min_ct2 MIN_CT2]
+                       [--out_folder OUT_FOLDER] [--id ID] [--nprocs NPROCS]
+                       [--bin BIN] [--min_dp MIN_DP] [--min_cc MIN_CC]
+                       [--min_bq MIN_BQ] [--min_mq MIN_MQ] [--tmp_dir TMP_DIR]
+
+Script to calculate the number of callable sites per unique cell
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --bam BAM             Tumor bam file to be analysed
+  --ref REF             Reference genome. *fai must be available in the same
+                        folder as reference
+  --infile INFILE       Base calling file (obtained by
+                        BaseCellCalling.step1.py)
+  --min_ct1 MIN_CT1     Minimum number of cell types with enough reads to
+                        consider a genomic site. Default = 2
+  --min_ct2 MIN_CT2     Minimum number of cell types with enough unique cell
+                        counts to consider a genomic site. Default = 2
+  --out_folder OUT_FOLDER
+                        Out folder
+  --id ID               Prefix of out file. If provided, please use next
+                        format: *.[cell_type] . Example: sample1.t_cell. If
+                        not provided, it is taken from bam file
+  --nprocs NPROCS       Number of processes [Default = 1]
+  --bin BIN             Bin size for running the analysis [Default 50000]
+  --min_dp MIN_DP       Minimum coverage to consider the genomic site. Default
+                        = 5
+  --min_cc MIN_CC       Minimum number of cells required to consider a genomic
+                        site. Default = 5
+  --min_bq MIN_BQ       Minimum base quality permited for the base counts.
+                        Default = 20
+  --min_mq MIN_MQ       Minimum mapping quality required to analyse read.
+                        Default = 255
+  --tmp_dir TMP_DIR     Temporary folder for tmp files
+```
 Getting the genotype for each unique cell for the variant sites
 
 Preparing the output file for annovar annotation
