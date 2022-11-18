@@ -263,7 +263,6 @@ SComatic provides the following additional functionalities, which are described 
 - Getting the number of callable sites per cell type
 - Getting the number of callable sites per unique cell
 - Getting the genotype for each unique cell for the variant sites
-- Preparing the output file for annovar annotation
 
 ## Contact
 If you have any comments or suggestions about SComatic please raise an issue or contact us: 
