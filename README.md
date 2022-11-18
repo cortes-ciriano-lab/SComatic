@@ -81,19 +81,6 @@ AAACCTGTCGTACGGC  T_cell
 AAACCTGTCTTGCAAG  T_cell
 AAACGGGAGACGCACA  T_cell
 ```
-
-- Example:
-```python
-bam=
-sample=
-output_dir=
-python scripts/SplitBam/SplitBamCellTypes.py --bam $bam \
-        --meta $out1/${sample}.cell_annotation.ready.txt \
-        --id ${sample} \
-        --n_trim 5 \
-        --max_nM 5 \
-        --outdir $output_dir
- ```
  
 ## Step 2: Collecting base count information
 
@@ -146,58 +133,6 @@ optional arguments:
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
 
-- Example:
-```python
-cell_type_bam=
-BLACKLIST=
-output_dir=
-temp=
-REF=
-python scripts/BaseCellCounter/BaseCellCounter.py --bam $cell_type_bam \
-    --ref $REF \
-    --chrom all \
-    --bed_out $BLACKLIST \
-    --out_folder $output_dir \
-    --min_bq 30 \
-    --tmp_dir $temp \
-    --nprocs 16
-```
-
-In our experience, when running SComatic in an HPC cluster it is most efficient to compute the base count information for all cell types at once. One can do that by running, for example:
-
-```python
-for bam in $(ls -d $out/*/cell_type_bams/*bam);do
-  
-  # Cell type
-  cell_type=$(basename $bam | awk -F'.' '{print $(NF-1)}')
-
-  # Out for bam cell counter
-  output_dir=$(dirname $(dirname $bam))/base_cell_counter
-  mkdir -p $output_dir
-
-  # Log folder
-  logs=$output_dir/logs
-  mkdir -p $logs
-
-  # Temp folder
-  temp=$output_dir/temp_${cell_type}
-  mkdir -p $temp
-
-  # Command line to submit to cluster
-  run="python $SCRIPT --bam $bam \
-    --ref $REF \
-    --chrom all \
-    --bed_out $BLACKLIST \
-    --out_folder $output_dir \
-    --min_bq 30 \
-    --tmp_dir $temp \
-    --nprocs 16"
-
-  rm -f ${logs}/BaseCellCounter.o.log ${logs}/BaseCellCounter.e.log
-  bsub -M 5G -n 16 -J BaseCellCounter -o ${logs}/BaseCellCounter.${cell_type}.o.log -e ${logs}/BaseCellCounter.${cell_type}.e.log "$run"
-done
-```
-
 ## Step 3: Merging  base count matrices
 In Step 3, SComatic takes as input base count matrices computed in Step 2 for all cell types analysed to merge them into a single base count matrix, whic is stored in tsv format. Individual base count matrices to be merged need to be stored in the same directory.
 
@@ -217,14 +152,6 @@ optional arguments:
   --out_file OUT_FILE   Prefix out files
 ```
 
-- Example
-```python
-output_dir=
-sample=
-TSV=
-python scripts/MergeCounts/MergeBaseCellCounts.py --tsv_folder $TSV \
-  --out_file $output_dir/${sample}.BaseCellCounts.AllCellTypes.tsv
-```
 
 ## Step 4: Detection of somatic mutations
 The last step consists of running to scripts to call somatic mutations.
@@ -293,18 +220,6 @@ optional arguments:
                         [Default: 103.47683488327257]
 ```
 
-- Example:
-```python
-TSV=
-output_dir=
-sample=
-REF=
-python scripts/BaseCellCalling/BaseCellCalling.step1.py \
-          --infile $TSV \
-          --outfile $output_dir/${sample} \
-          --ref $REF
-```
-
 In case that the user wants to estimate new Beta binomial parameters, this extra step should run (LINK).
 
 ### Step 4.2 
@@ -332,17 +247,6 @@ optional arguments:
                         variants [Default: 5]
 ```
 
-- Run example:
-```python
-editing=
-output_dir=
-PON=
-python scripts/BaseCellCalling/BaseCellCalling.step2.py \
-          --infile $output_dir/${sample}.step1.targeted_regions.tsv \
-          --outfile $output_dir/${sample}.targeted_regions  \
-          --editing $editing \
-          --pon $PON
-```
 
 ## [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
 
