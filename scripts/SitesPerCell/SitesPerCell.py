@@ -222,10 +222,10 @@ def run_interval(interval,sites,BAM, FASTA, MIN_COV, MIN_CC, tmp_dir, BQ, MQ):
 
 
 def initialize_parser():
-	parser = argparse.ArgumentParser(description='Script to obtain a list of base and cell counts in scRNA bam file')
+	parser = argparse.ArgumentParser(description='Script to calculate the number of callable sites per unique cell')
 	parser.add_argument('--bam', type=str, default=1, help='Tumor bam file to be analysed', required = True)
 	parser.add_argument('--ref', type=str, default=1, help='Reference genome. *fai must be available in the same folder as reference', required = True)
-	parser.add_argument('--in_tsv', type=str, default='', help='Base calling file (obtained in step1 with the targeted sites)', required = False)
+	parser.add_argument('--infile', type=str, default='', help='Base calling file (obtained by BaseCellCalling.step1.py)', required = False)
 	parser.add_argument('--min_ct1', type=int, default = 2, help='Minimum number of cell types with enough reads to consider a genomic site. Default = 2', required = False)
 	parser.add_argument('--min_ct2', type=int, default = 2, help='Minimum number of cell types with enough unique cell counts to consider a genomic site. Default = 2', required = False)
 	parser.add_argument('--out_folder', default = '.', help='Out folder', required = False)
@@ -253,7 +253,7 @@ def main():
 	OUTF = args.out_folder
 	ID = args.id
 	BIN = args.bin
-	in_tsv = args.in_tsv
+	in_tsv = args.infile
 	MIN_CT1 = args.min_ct1
 	MIN_CT2 = args.min_ct2
 	MIN_COV = args.min_dp
