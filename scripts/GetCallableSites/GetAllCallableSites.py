@@ -103,8 +103,8 @@ def	callable_sites(file,min_cell_types,MAX):
 
 
 def initialize_parser():
-	parser = argparse.ArgumentParser(description='Script to perform the scRNA somatic variant calling')
-	parser.add_argument('--in_tsv', type=str, help='File listing the full path to the tsv files obtained by BaseCellCalling.step1.py to be analysised', required = True)   
+	parser = argparse.ArgumentParser(description='Script to calculate the number of callable sites per cell type')
+	parser.add_argument('--infile', type=str, help='Tsv file obtained by BaseCellCalling.step1.py to be analysed', required = True)   
 	parser.add_argument('--outfile', type=str, help='Out file prefix', required = True)
 	parser.add_argument('--max_cov', type=int, default = 150, help='Maximum coverage to record in the callable sites table. Greater values will be collapsed to the provided one. [Default: 150]', required = False)
 	parser.add_argument('--min_cell_types', type=int, default = 2, help='Minimum number of cell types with enough coverage/cells at a site to be considered as a callable [Default: 2]', required = False)
@@ -116,7 +116,7 @@ def main():
 	parser = initialize_parser()
 	args = parser.parse_args()
 
-	infile = args.in_tsv
+	infile = args.infile
 	outfile = args.outfile
 	max_cov = args.max_cov
 	min_cell_types = args.min_cell_types
