@@ -206,7 +206,7 @@ def merge_cell_types_files(infiles,outfile):
 def initialize_parser():
 	parser = argparse.ArgumentParser(description='Script to merge the cell/base counts tsv files per cell type in only one')
 	parser.add_argument('--tsv_folder', type=str, default=1, help='Path to the directory containing the base count files in tsv format for each cell type. All tsv files in the directory will be used. Avoid not desired tsv files in this folder', required = True)   
-	parser.add_argument('--out_file', help='Prefix used to name output files', required = True)
+	parser.add_argument('--outfile', help='Output file name', required = True)
 	return (parser)
 
 def main():
@@ -216,7 +216,7 @@ def main():
 	args = parser.parse_args()
 
 	tsv_folder = args.tsv_folder
-	out_file = args.out_file
+	out_file = args.outfile
 
 	# 1. Merge cell types files and select potential het sites for phasing
 	print ('-----------------------------------------------------------')
