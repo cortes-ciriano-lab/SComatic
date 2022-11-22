@@ -159,7 +159,7 @@ optional arguments:
 
 
 ## Step 4: Detection of somatic mutations
-The last step consists of running to scripts to call somatic mutations.
+The last step consists of running two scripts to call somatic mutations.
 
 ### Step 4.1
 SComatic applies a set of hard filters and Beta binomial tests to discount sites affected by recurrent technical artefacts as somatic mutations. 
@@ -225,10 +225,10 @@ optional arguments:
                         [Default: 103.47683488327257]
 ```
 
-In case that the user wants to estimate new Beta binomial parameters, this extra step should run (LINK).
+In case that the user wants to estimate new Beta binomial parameters, the following extra step should be run (LINK).
 
 ### Step 4.2 
-Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of normals) , and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. In case of using the provided [RNA editing](RNAediting) file, please cite these articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
+Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of Normals), and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. When using the provided [RNA editing](RNAediting) file, please cite the following articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
 
 - List of parameters: 
 ```python 
@@ -260,14 +260,14 @@ Default values for the Beta binomial tests used in  Step 4.1 are computed using 
 
 ## [Generating a custom Panel of Normals](/docs/pon.md)
 
-In Step 4.2, SComatic uses a Panel of Normals (PoN) to detect systematic errors and germline contamination in the somatic mutation callset. The PoN provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a [script](/docs/pon.md) to build a custom PoN using other data sets. 
+In Step 4.2, SComatic uses a Panel of Normals (PoN) to detect systematic errors and germline contamination in the somatic mutation callset. The PoN provided in this repository is computed using the data described in the manuscript (Hg38 reference genome). However, SComatic provides a [script](/docs/pon.md) to build a custom PoN using other data sets if required. 
 
 ## [Other SComatic functionalities](/docs/OtherFunctionalities.md)
 SComatic provides the following additional functionalities, which are described in detail [here](/docs/OtherFunctionalities.md).
 
-- Getting the number of callable sites per cell type
-- Getting the number of callable sites per unique cell
-- Getting the genotype for each unique cell for the variant sites
+- Computing the number of callable sites per cell type
+- Computing the number of callable sites per cell
+- Computing the genotype for each cell at the variant sites
 
 ## Contact
 If you have any comments or suggestions about SComatic please raise an issue or contact us: 
