@@ -299,7 +299,7 @@ def initialize_parser():
 	parser.add_argument('--infile', type=str, default=1, help='Base calling file (obtained by BaseCellCalling.step2.py), ideally only the PASS variants', required = True)
 	parser.add_argument('--ref', type=str, default=1, help='Reference genome. *fai must be available in the same folder as reference', required = True)
 	parser.add_argument('--meta', type=str, default=1, help='Metadata with cell barcodes per cell type', required = True)
-	parser.add_argument('--out_file', default = 'Matrix.tsv', help='Out file', required = False)
+	parser.add_argument('--outfile', default = 'Matrix.tsv', help='Out file', required = False)
 	parser.add_argument('--alt_flag', default = 'All',choices = ['Alt','All'], help='Flag to search for cells carrying the expected alt variant (Alt) or all cells independent of the alt allele observed (All)', required = False)
 	parser.add_argument('--nprocs',default = 1, help='Number of processes [Default = 1]',required=False,type = int)
 	parser.add_argument('--bin', type=int, default=50000, help='Bin size for running the analysis [Default 50000]', required = False)
@@ -320,7 +320,7 @@ def main():
 	BAM = args.bam
 	FASTA = args.ref
 	CORE = args.nprocs
-	out_file = args.out_file
+	out_file = args.outfile
 	window = args.bin
 	MIN_BQ = args.min_bq
 	MIN_MQ = args.min_mq
