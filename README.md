@@ -144,8 +144,8 @@ In Step 3, SComatic takes as input base count matrices computed in Step 2 for al
 - List of parameters:
 ```python 
 python scripts/MergeCounts/MergeBaseCellCounts.py --help
-usage: MergeBaseCellCounts.py [-h] --tsv_folder TSV_FOLDER --out_file
-                                       OUT_FILE
+usage: MergeBaseCellCounts.py [-h] --tsv_folder TSV_FOLDER --outfile
+                                       OUTFILE
 
 Script to merge the cell/base counts tsv files per cell type in only one
 
@@ -154,7 +154,7 @@ optional arguments:
   --tsv_folder TSV_FOLDER
                         Folder with cell/base count files (tsv) per cell type.
                         Avoid not desired tsv files in this folder
-  --out_file OUT_FILE   Prefix out files
+  --outfile OUTFILE   Out file name
 ```
 
 
