@@ -145,7 +145,6 @@ def BaseCount(LIST, REF_BASE):
 		
 	return ([NUCLEOTIDES,MAX_ALT,AC])
 
-#@profile
 def EasyReadPileup(LIST, REF_BASE):
 	Bases = set(['A','C','T','G','N'])
 	
