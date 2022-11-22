@@ -44,7 +44,6 @@ def concatenate_sort_temp_files_and_write(out_file, tmp_dir, ID):
 	df.rename({0: 'SitesPerCell'}, axis=1, inplace=True)
 	df.to_csv(out_file, index=False)
 
-	print (df)
 
 def MakeWindows(bed, window):
 	## Makewindows in bed file based on the window sizes specified as argument
@@ -90,7 +89,6 @@ def BaseCount(LIST, REF_BASE):
 		
 	return ([NUCLEOTIDES,MAX_ALT,AC])
 
-#@profile
 def EasyReadPileup(LIST, REF_BASE):
 	Bases = set(['A','C','T','G','N'])
 	
@@ -121,7 +119,6 @@ def EasyReadPileup(LIST, REF_BASE):
 			
 	return (NEW_LIST,AC)
 
-#@profile
 def run_interval(interval,sites,BAM, FASTA, MIN_COV, MIN_CC, tmp_dir, BQ, MQ):
 	
 	# Coordinates to analyse
