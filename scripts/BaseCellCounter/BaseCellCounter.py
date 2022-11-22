@@ -196,6 +196,7 @@ def run_interval(interval, BAM, FASTA, MIN_COV, MIN_CC,MIN_AF, MIN_AC, tmp_dir, 
 		if POS >= START and POS < END:
 			# Get reference base from fasta file
 			ref_base = inFasta.fetch(CHROM, POS, POS+1)
+			ref_base = ref_base.upper()
 			
 			# Get coverage
 			DP = p.get_num_aligned()
