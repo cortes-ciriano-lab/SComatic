@@ -1,6 +1,6 @@
 # Other SComatic functionalities
 
-## Getting the number of callable sites per cell type
+## Computing the number of callable sites per cell type
 
 ```
 python scripts/GetCallableSites/GetAllCallableSites.py --help
@@ -24,7 +24,7 @@ optional arguments:
                         callable [Default: 2]
 ```
 
-## Getting the number of callable sites per unique cell
+## Computing the number of callable sites per single cell
 
 ```
 python scripts/SitesPerCell/SitesPerCell.py --help
@@ -65,7 +65,7 @@ optional arguments:
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
 
-## Getting the genotype for each unique cell for the variant sites
+## Computing the genotype for each cell at the variant sites
 
 ```
 python scripts/SingleCellGenotype/SingleCellGenotype.py --help
