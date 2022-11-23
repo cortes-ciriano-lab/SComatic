@@ -42,8 +42,8 @@ We show below how to run SComatic for the detection of somatic mutations in scRN
 
 SComatic consists of the following 4 steps, each of which is run using a different Python script as indicated below.
 
-## Step 1: Splitting alignment file in cell type specific bams
-The first step consists of splitting the BAM file containing aligned sequencing reads for cell types in a sample are  into cell-type-specific BAM files using precomputed cell type annotations. The BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger, 10x Genomics).
+## Step 1: Splitting alignment file into cell-type-specific bams
+The first step consists of splitting the BAM file containing aligned sequencing reads for all cell types in a sample  into cell-type-specific BAM files using precomputed cell type annotations. The BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger, 10x Genomics).
 Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the following parameters:
 
 - List of parameters:
@@ -72,7 +72,7 @@ optional arguments:
   --outdir OUTDIR  Out directory
 ```
 
-The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespace or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported.
+The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespaces or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported.
 
 ```
 Index Cell_type
@@ -88,8 +88,7 @@ AAACGGGAGACGCACA  T_cell
 ```
  
 ## Step 2: Collecting base count information
-
-Base count information for each cell type and for every position in the genome is recorded in a base count matrix indexed by cell types and genomic coordinates. 
+Base count information for each cell type and for every position if the genome is recorded in a base count matrix indexed by cell types and genomic coordinates. 
 
 The command line to run this step is: 
 
@@ -139,7 +138,7 @@ optional arguments:
 ```
 
 ## Step 3: Merging  base count matrices
-In Step 3, SComatic takes as input base count matrices computed in Step 2 for all cell types analysed to merge them into a single base count matrix, whic is stored in tsv format. Individual base count matrices to be merged need to be stored in the same directory.
+In Step 3, SComatic takes as input base count matrices computed in Step 2 for all cell types analysed to merge them into a single base count matrix, which is stored in tsv format. Individual base count matrices to be merged need to be stored in the same directory.
 
 - List of parameters:
 ```python 
@@ -147,7 +146,7 @@ python scripts/MergeCounts/MergeBaseCellCounts.py --help
 usage: MergeBaseCellCounts.py [-h] --tsv_folder TSV_FOLDER --outfile
                                        OUTFILE
 
-Script to merge the cell/base counts tsv files per cell type in only one
+Script to merge the cell/base counts tsv files per cell type in only one file
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -225,7 +224,7 @@ optional arguments:
                         [Default: 103.47683488327257]
 ```
 
-In case that the user wants to estimate new Beta binomial parameters, the following extra step should be run (LINK).
+To estimate new Beta binomial parameters whenever required by the user, SComatic provides the following [scripts](/docs/betabinomialestimation.md).
 
 ### Step 4.2 
 Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of Normals), and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. When using the provided [RNA editing](RNAediting) file, please cite the following articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
