@@ -32,7 +32,7 @@ gunzip PoNs/PoN.scATACseq.hg38.tsv.gz
 ```
 gunzip RNAediting/AllEditingSites.hg38.txt.gz
 ```
-In case of using this file, please cite these articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
+If you use the RNA editing database above, please cite the following articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
 
 # Detection of somatic mutations in single-cell data sets using SComatic
 We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
