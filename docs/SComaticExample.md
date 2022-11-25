@@ -111,7 +111,7 @@ awk '$1 ~ /^#/ || $6 == "PASS"' ${output_dir4}/${sample}.calling.step2.tsv > ${o
 
 ## Other SComatic functionalities
 
-# Computing the number of callable sites per cell type
+- Computing the number of callable sites per cell type
 ```
 sample=Example
 output_dir5=$output_dir/CellTypeCallableSites
@@ -122,7 +122,7 @@ python $SCOMATIC/scripts/GetCallableSites/GetAllCallableSites.py --infile $outpu
    --max_cov 150 --min_cell_types 2
 ```
 
-# Computing the number of callable sites per cell
+- Computing the number of callable sites per cell
 ```
 sample=Example
 REF=$SCOMATIC/example_data/chr10.fa
@@ -146,7 +146,7 @@ for bam in $(ls -d $output_dir1/*bam);do
 done
 ```
 
-# Computing the genotype for each cell at the variant sites
+- Computing the genotype for each cell at the variant sites
 ```
 META=$SCOMATIC/example_data/Example.cell_barcode_annotations.tsv
 sample=Example
