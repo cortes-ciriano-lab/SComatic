@@ -146,7 +146,7 @@ for bam in $(ls -d $output_dir1/*bam);do
 done
 ```
 
-- Computing the genotype for each cell at the variant sites
+### Computing the genotype for each cell at the variant sites
 ```
 META=$SCOMATIC/example_data/Example.cell_barcode_annotations.tsv
 sample=Example
