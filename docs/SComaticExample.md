@@ -36,6 +36,7 @@ python $SCOMATIC/scripts/SplitBam/SplitBamCellTypes.py --bam $SCOMATIC/example_d
 ```
 
 ## Step 2: Collecting base count information
+
 ```
 REF=$SCOMATIC/example_data/chr10.fa
 
@@ -64,4 +65,47 @@ for bam in $(ls -d $output_dir1/*bam);do
 done
 ```
 
-In our experience, when running SComatic in an HPC cluster it is most efficient to compute the base count information for all cell types at once, speacially when submitting each python line independently and at the same time to the cluster, and using multiple processors (p.e. --nprocs 16) 
+In our experience, when running SComatic in an HPC cluster it is most efficient to compute the base count information for all cell types at once, specially when submitting each python line independently and at the same time to the cluster, and using multiple processors (p.e. --nprocs 16) 
+
+## Step 3: Merging base count matrices
+```
+sample=Example
+output_dir3=$output_dir/Step3_BaseCellCountsMerged
+mkdir -p $output_dir3
+
+python $SCOMATIC/scripts/MergeCounts/MergeBaseCellCounts.py --tsv_folder ${output_dir2} \
+  --outfile ${output_dir3}/${sample}.BaseCellCounts.AllCellTypes.tsv
+```
+
+## Step 4: Detection of somatic mutations
+
+# Step 4.1
+```
+output_dir4=$output_dir/Step4_VariantCalling
+mkdir -p $output_dir4
+
+sample=Example
+REF=$SCOMATIC/example_data/chr10.fa
+
+python $SCOMATIC/scripts/BaseCellCalling/BaseCellCalling.step1.py \
+          --infile ${output_dir3}/${sample}.BaseCellCounts.AllCellTypes.tsv \
+          --outfile ${output_dir4}/${sample} \
+          --ref $REF
+```
+
+# Step 4.2
+```
+editing=$SCOMATIC/RNAediting/AllEditingSites.hg38.txt
+PON=$SCOMATIC/PoNs/PoN.scRNAseq.hg38.tsv
+
+python $SCOMATIC/scripts/BaseCellCalling/BaseCellCalling.step2.py \
+          --infile ${output_dir4}/${sample}.calling.step1.tsv \
+          --outfile ${output_dir4}/${sample} \
+          --editing $editing \
+          --pon $PON
+```
+# Keep only pass mutations
+```
+awk '$1 ~ /^#/ || $6 == "PASS"' ${output_dir4}/${sample}.calling.step2.tsv > ${output_dir4}/${sample}.calling.step2.pass.tsv
+```
+
