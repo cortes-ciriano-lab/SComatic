@@ -79,7 +79,7 @@ python $SCOMATIC/scripts/MergeCounts/MergeBaseCellCounts.py --tsv_folder ${outpu
 
 ## Step 4: Detection of somatic mutations
 
-# Step 4.1 & 4.2
+- Step 4.1 & 4.2
 ```
 # Step 4.1
 output_dir4=$output_dir/Step4_VariantCalling
@@ -104,7 +104,7 @@ python $SCOMATIC/scripts/BaseCellCalling/BaseCellCalling.step2.py \
           --pon $PON
 ```
 
-# Keep only pass mutations
+- Keep only pass mutations
 ```
 awk '$1 ~ /^#/ || $6 == "PASS"' ${output_dir4}/${sample}.calling.step2.tsv > ${output_dir4}/${sample}.calling.step2.pass.tsv
 ```
