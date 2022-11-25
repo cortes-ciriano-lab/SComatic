@@ -79,7 +79,7 @@ python $SCOMATIC/scripts/MergeCounts/MergeBaseCellCounts.py --tsv_folder ${outpu
 
 ## Step 4: Detection of somatic mutations
 
-- Step 4.1 & Step 4.2
+#### Step 4.1 & Step 4.2
 ```
 # Step 4.1
 output_dir4=$output_dir/Step4_VariantCalling
@@ -104,14 +104,15 @@ python $SCOMATIC/scripts/BaseCellCalling/BaseCellCalling.step2.py \
           --pon $PON
 ```
 
-- Keep only pass mutations
+If you only want to keep the somatic mutations that passed all filters, you can do it with a simple awk command:
+
 ```
 awk '$1 ~ /^#/ || $6 == "PASS"' ${output_dir4}/${sample}.calling.step2.tsv > ${output_dir4}/${sample}.calling.step2.pass.tsv
 ```
 
 ## Other SComatic functionalities
 
-### Computing the number of callable sites per cell type
+#### Computing the number of callable sites per cell type
 ```
 sample=Example
 output_dir5=$output_dir/CellTypeCallableSites
@@ -146,7 +147,7 @@ for bam in $(ls -d $output_dir1/*bam);do
 done
 ```
 
-### Computing the genotype for each cell at the variant sites
+#### Computing the genotype for each cell at the variant sites
 ```
 META=$SCOMATIC/example_data/Example.cell_barcode_annotations.tsv
 sample=Example
