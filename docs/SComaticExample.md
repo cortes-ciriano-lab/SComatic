@@ -79,7 +79,7 @@ python $SCOMATIC/scripts/MergeCounts/MergeBaseCellCounts.py --tsv_folder ${outpu
 
 ## Step 4: Detection of somatic mutations
 
-- Step 4.1 & 4.2
+- Step 4.1 & Step 4.2
 ```
 # Step 4.1
 output_dir4=$output_dir/Step4_VariantCalling
@@ -107,5 +107,70 @@ python $SCOMATIC/scripts/BaseCellCalling/BaseCellCalling.step2.py \
 - Keep only pass mutations
 ```
 awk '$1 ~ /^#/ || $6 == "PASS"' ${output_dir4}/${sample}.calling.step2.tsv > ${output_dir4}/${sample}.calling.step2.pass.tsv
+```
+
+## Other SComatic functionalities
+
+# Computing the number of callable sites per cell type
+```
+sample=Example
+output_dir5=$output_dir/CellTypeCallableSites
+mkdir -p $output_dir5
+
+python $SCOMATIC/scripts/GetCallableSites/GetAllCallableSites.py --infile $output_dir4/${sample}.calling.step1.tsv  \
+   --outfile $output_dir5/${sample} \
+   --max_cov 150 --min_cell_types 2
+```
+
+# Computing the number of callable sites per cell
+```
+sample=Example
+REF=$SCOMATIC/example_data/chr10.fa
+STEP4_1=$output_dir4/${sample}.calling.step1.tsv
+
+output_dir6=$output_dir/UniqueCellCallableSites
+mkdir -p $output_dir6
+
+for bam in $(ls -d $output_dir1/*bam);do  
+    cell_type=$(basename $bam | awk -F'.' '{print $(NF-1)}')
+    echo $cell_type
+    
+    temp=$output_dir6/temp_${cell_type}
+    mkdir -p $temp
+
+    python $SCOMATIC/scripts/SitesPerCell/SitesPerCell.py --bam $bam    \
+       --infile $output_dir4/${sample}.calling.step1.tsv   \
+       --ref $REF \
+       --out_folder $output_dir6 --tmp_dir $temp --nprocs 1
+    echo
+done
+```
+
+# Computing the genotype for each cell at the variant sites
+```
+META=$SCOMATIC/example_data/Example.cell_barcode_annotations.tsv
+sample=Example
+REF=$SCOMATIC/example_data/chr10.fa
+STEP4_2_pass=${output_dir4}/${sample}.calling.step2.pass.tsv
+
+output_dir7=$output_dir/SingleCellAlleles
+mkdir -p $output_dir7
+
+for bam in $(ls -d $output_dir1/*bam);do  
+    cell_type=$(basename $bam | awk -F'.' '{print $(NF-1)}')
+    
+    temp=$output_dir7/temp_${cell_type}
+    mkdir -p $temp
+
+    python $SCOMATIC/scripts/SingleCellGenotype/SingleCellGenotype.py --bam $bam  \
+        --infile ${STEP4_2_pass}   \
+        --nprocs 1   \
+        --meta $META   \
+        --outfile ${output_dir7}/${cell_type}.single_cell_genotype.tsv  \
+        --tmp_dir $temp  \
+        --ref $REF
+
+    rm -rf $temp
+done
 ```
 
