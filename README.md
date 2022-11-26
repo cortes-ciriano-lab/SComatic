@@ -58,18 +58,18 @@ Split bam file by cell types
 
 optional arguments:
   -h, --help       show this help message and exit
-  --bam BAM        Bam file to be analysed (Sorted by coordinates)
+  --bam BAM        Bam file to be analysed (Sorted by coordinate)
   --meta META      Metadata with cell barcodes per cell type
   --id ID          Sample id
   --tissue TISSUE  Tissue name. Recommended when different tissues from the
                    same individual are analysed
-  --max_nM MAX_NM  Maximum number of mismatched permitted to consider the read
+  --max_nM MAX_NM  Maximum number of mismatches permitted to consider reads for analysis
                    [Default: 1000]
-  --min_MQ MIN_MQ  Minimum mapping quality required to consider the read
+  --min_MQ MIN_MQ  Minimum mapping quality required to consider reads for analysis
                    [Default: 255]
   --n_trim N_TRIM  Number of bases trimmed (setting the base quality to 0) at
-                   the beginning and end of the read [Default: 0]
-  --outdir OUTDIR  Out directory
+                   the beginning and end of each read [Default: 0]
+  --outdir OUTDIR  Output directory
 ```
 
 The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespaces or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported.
@@ -106,30 +106,30 @@ usage: BaseCellCounter.py [-h] --bam BAM --ref REF --chrom CHROM
 Script to obtain a list of base and cell counts in scRNA bam file
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   --bam BAM             Tumor bam file to be analysed
   --ref REF             Reference genome. *fai must be available in the same
                         folder as reference
-  --chrom CHROM         Chromosome to be analysed. --chrom all to run
-                        in all chromosomes
+  --chrom CHROM         Chromosome to be analysed. Use --chrom all to analyse
+                        all chromosomes
   --out_folder OUT_FOLDER
-                        Out folder
-  --id ID               Prefix of out file. If provided, please use next
+                        Output folder
+  --id ID               Prefix of out file. If provided, please use the following
                         format: *.[cell_type] . Example: sample1.t_cell. If
-                        not provided, it is taken from bam file
+                        not provided, it is taken from the bam file
   --nprocs NPROCS       Number of processes [Default = 1]
   --bin BIN             Bin size for running the analysis [Default 50000]
-  --bed BED             Regions to focus the analysis. Three-column bed file
-  --bed_out BED_OUT     Regions to ignore in the analysis. Three-column bed
+  --bed BED             Regions to focus the analysis on. Three-column bed file
+  --bed_out BED_OUT     Regions to ignore. Three-column bed
                         file
-  --min_ac MIN_AC       Minimum alternative count to consider the genomic
-                        site. Default = 0
-  --min_af MIN_AF       Minimum alternative allele fraction to consider the
-                        genomic site. Default = 0
-  --min_dp MIN_DP       Minimum coverage to consider the genomic site. Default
+  --min_ac MIN_AC       Minimum alternative count to consider a genomic
+                        site for further analysis. Default = 0
+  --min_af MIN_AF       Minimum alternative allele fraction to consider a
+                        genomic site for further analysis. Default = 0
+  --min_dp MIN_DP       Minimum coverage to consider a genomic site for further analysis. Default
                         = 5
   --min_cc MIN_CC       Minimum number of cells required to consider a genomic
-                        site. Default = 5
+                        site for further analysis. Default = 5
   --min_bq MIN_BQ       Minimum base quality permited for the base counts.
                         Default = 20
   --min_mq MIN_MQ       Minimum mapping quality required to analyse read.
@@ -149,7 +149,7 @@ usage: MergeBaseCellCounts.py [-h] --tsv_folder TSV_FOLDER --outfile
 Script to merge the cell/base counts tsv files per cell type in only one file
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   --tsv_folder TSV_FOLDER
                         Folder with cell/base count files (tsv) per cell type.
                         Avoid not desired tsv files in this folder
@@ -182,45 +182,45 @@ usage: BaseCellCalling.step1.py [-h] --infile INFILE --outfile
 Script to perform the scRNA somatic variant calling
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   --infile INFILE       Input file with all samples merged in a single tsv
-  --outfile OUTFILE     Out file prefix
+  --outfile OUTFILE     Output file prefix
   --ref REF             Reference fasta file (*fai must exist)
-  --editing EDITING     Editing file to be used to remove RNA-diting sites
+  --editing EDITING     RNA editing file to be used to remove RNA-diting sites
   --pon PON             Panel of normals (PoN) file to be used to remove
                         germline and false positive calls
   --min_cov MIN_COV     Minimum depth of coverage to consider a sample.
                         [Default: 5]
   --min_cells MIN_CELLS
-                        Minimum number of cells covering a site to consider a
-                        sample. [Default: 5]
+                        Minimum number of cells with sequencing depth at a site to consider a
+                        sample for further analysis. [Default: 5]
   --min_ac_cells MIN_AC_CELLS
                         Minimum number of cells supporting the alternative
-                        allele to consider a mutation. [Default: 2]
+                        allele to call a mutation. [Default: 2]
   --min_ac_reads MIN_AC_READS
                         Minimum number of reads supporting the alternative
-                        allele to consider a mutation. [Default: 3]
+                        allele to call a mutation. [Default: 3]
   --max_cell_types MAX_CELL_TYPES
                         Maximum number of cell types carrying a mutation to
                         make a somatic call. [Default: 1]
   --min_cell_types MIN_CELL_TYPES
-                        Minimum number of cell types with enough coverage and
-                        cell to consider a site as callable [Default: 2]
+                        Minimum number of cell types with enough coverage across enough
+                        cells to consider a site as callable [Default: 2]
   --fisher_cutoff FISHER_CUTOFF
-                        P-value cutoff for the Fisher exact test performed to
-                        detect strand bias. Expected float value, if applied,
+                        P value cutoff for the Fisher's exact test performed to
+                        detect strand bias. A float value is expected, if applied,
                         we recommend 0.001. By default, this test is switched
                         off with a value of 1 [Default: 1]
   --min_distance MIN_DISTANCE
                         Minimum distance allowed between potential somatic
-                        variants [Default: 5]
-  --alpha1 ALPHA1       Alpha parameter for beta distribution of read counts.
+                        mutations [Default: 5]
+  --alpha1 ALPHA1       Alpha parameter for Beta distribution of read counts.
                         [Default: 0.260288007167716]
-  --beta1 BETA1         Beta parameter for beta distribution of read counts.
+  --beta1 BETA1         Beta parameter for Beta distribution of read counts.
                         [Default: 173.94711910763732]
-  --alpha2 ALPHA2       Alpha parameter for beta distribution of cell counts.
+  --alpha2 ALPHA2       Alpha parameter for Beta distribution of cell counts.
                         [Default: 0.08354121346569514]
-  --beta2 BETA2         Beta parameter for beta distribution of cell counts.
+  --beta2 BETA2         Beta parameter for Beta distribution of cell counts.
                         [Default: 103.47683488327257]
 ```
 
@@ -240,12 +240,12 @@ usage: BaseCellCalling.step2.py [-h] --infile INFILE --outfile
 Script to perform the scRNA somatic variant calling
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   --infile INFILE       Input file with all samples merged in a single tsv
-  --outfile OUTFILE     Out file prefix
-  --editing EDITING     Editing file to be used to remove RNA-diting sites
+  --outfile OUTFILE     Output file prefix
+  --editing EDITING     RNA editing file to be used to remove RNA-diting sites
   --pon PON             Panel of normals (PoN) file to be used to remove
-                        germline and false positive calls
+                        germline polymorphisms and recurrent arefacts
   --min_distance MIN_DISTANCE
                         Minimum distance allowed between potential somatic
                         variants [Default: 5]
