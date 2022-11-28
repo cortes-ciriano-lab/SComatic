@@ -13,7 +13,7 @@ For further details on SComatic, its assumptions, limitations and applications, 
 SComatic requires Python version >=3.7.0, R version >=3.6.0, [samtools](https://github.com/samtools/samtools) and datamash (>=v1.1.0, only for building your own panel of normals). 
 - We strongly recommend to build your own [conda](https://docs.conda.io/en/latest/) environment as follows:
 ```
-conda create -n SComatic -c bioconda python=3.7 r-base=3.6.1 samtools datamash
+conda create -n SComatic -c bioconda python=3.7 r-base=3.6.1 samtools datamash bedtools
 conda activate SComatic
 ```
 - Additional dependencies can be installed by running the following commands:
