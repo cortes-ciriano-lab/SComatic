@@ -179,8 +179,8 @@ def initialize_parser():
 	parser = argparse.ArgumentParser(description='Script to perform the scRNA somatic variant calling')
 	parser.add_argument('--infile', type=str, help='Input file with all samples merged in a single tsv', required = True)   
 	parser.add_argument('--outfile', type=str, help='Out file prefix', required = True)
-	parser.add_argument('--editing', type=str, help='Editing file to be used to remove RNA-diting sites', required = False)
-	parser.add_argument('--pon', type=str, help='Panel of normals (PoN) file to be used to remove germline and false positive calls', required = False)	
+	parser.add_argument('--editing', type=str, help='RNA editing file to be used to remove RNA-diting sites', required = False)
+	parser.add_argument('--pon', type=str, help='Panel of normals (PoN) file to be used to remove germline polymorphisms and recurrent artefacts', required = False)	
 	parser.add_argument('--min_distance', type=int, default = 5, help='Minimum distance allowed between potential somatic variants [Default: 5]', required = False)
 	return (parser)
 
