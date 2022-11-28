@@ -24,6 +24,8 @@ optional arguments:
                         callable [Default: 2]
 ```
 
+**Example:** check [here](/docs/SComaticExample.md) to see how to run this script with an example sample.  
+
 ## Computing the number of callable sites per single cell
 
 ```
@@ -65,6 +67,8 @@ optional arguments:
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
 
+**Example:** check [here](/docs/SComaticExample.md) to see how to run this script with an example sample.  
+
 ## Computing the genotype for each cell at the variant sites
 
 ```
@@ -99,3 +103,5 @@ optional arguments:
   --tissue TISSUE       Tissue of the sample
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
+
+**Example:** check [here](/docs/SComaticExample.md) to see how to run this script with an example sample.  
