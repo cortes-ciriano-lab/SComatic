@@ -10,7 +10,7 @@ conda activate SComatic
 
 Create an output folder and go to the main SComatic folder
 ```
-SCOMATIC=SComatic
+SCOMATIC=$PWD
 output_dir=$SCOMATIC/example_data/results
 mkdir -p $output_dir
 ```
