@@ -468,85 +468,12 @@ def variant_calling_step1(file,alpha1,beta1,alpha2,beta2,min_ac_cells,min_ac_rea
 	outfile.close()
 	return(VARIANT_POSITIONS,CHR_INFORMATIVE_POSITIONS)
 
-def variant_calling_step2(outfile1,distance,editing,pon,dict_variants_step1,window,outfile):
-	# Build RNA-diting dictionary
-	EDITING_DICT = build_dict(editing,window)
-	PON_DICT = build_dict(pon,window)
-
-	outfile= open(outfile,'w')
-	with open(outfile1, 'r') as f:
-		for line in f:
-			if line.startswith('#'):
-				outfile.write(line)
-			else:
-				# Create dictionary with cell types and indexes for each one
-				elements = line.split('\t')
-
-				# Chromosome
-				CHROM = elements[0]
-
-				# Position
-				POS = int(elements[1])		
-
-				# Filter column
-				FILTER = elements[4]
-				if (FILTER != "."):
-
-					# Check for editing
-					WIND = math.floor(POS / float(window))
-					try: 
-						EDITING = POS in EDITING_DICT[CHROM][WIND]
-					except:
-						EDITING = False
-
-					# Check for PoN
-					try: 
-						PON = POS in PON_DICT[CHROM][WIND]
-					except:
-						PON = False
-
-					# Check if there are potential variants close to the candidate site 	
-					CLOSE = GetClosestHetSites(CHROM,POS,dict_variants_step1,window,distance)
-					if CLOSE > 0 or EDITING == True or PON == True:
-						# Editing filter
-						if EDITING == True:
-							if (FILTER == 'PASS'):
-								FILTER  = 'RNA_editing_db'
-							else:
-								FILTER = FILTER + ',RNA_editing_db'
-
-						# Close variants filter
-						if (CLOSE > 0):
-							if (FILTER == 'PASS'):
-								FILTER  = 'Clustered'
-							else:
-								FILTER = FILTER + ',Clustered'
-
-						# Editing filter
-						if PON == True:
-							if (FILTER == 'PASS'):
-								FILTER  = 'PoN'
-							else:
-								FILTER = FILTER + ',PoN'
-
-
-						elements[4] = FILTER
-						outfile.write('\t'.join(elements))
-					else:
-						outfile.write(line)
-				else:
-					outfile.write(line)
-					
-	outfile.close()
-
-
 def longestRun(s):
 	if len(s) == 0: return 0
 	runs = ''.join('*' if x == y else ' ' for x,y in zip(s,s[1:]))
 	starStrings = runs.split()
 	if len(starStrings) == 0: return 1
 	return 1 + max(len(stars) for stars in starStrings)
-
 
 def FrequentBase(s):
 	L = list(s)
