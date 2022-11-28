@@ -86,7 +86,7 @@ AAACCTGTCGTACGGC  T_cell
 AAACCTGTCTTGCAAG  T_cell
 AAACGGGAGACGCACA  T_cell
 ```
- 
+
 ## Step 2: Collecting base count information
 Base count information for each cell type and for every position if the genome is recorded in a base count matrix indexed by cell types and genomic coordinates. 
 
@@ -193,7 +193,7 @@ optional arguments:
                         [Default: 5]
   --min_cells MIN_CELLS
                         Minimum number of cells with sequencing depth at a site to consider a
-                        sample for further analysis. [Default: 5]
+                        genomic site for further analysis. [Default: 5]
   --min_ac_cells MIN_AC_CELLS
                         Minimum number of cells supporting the alternative
                         allele to call a mutation. [Default: 2]
