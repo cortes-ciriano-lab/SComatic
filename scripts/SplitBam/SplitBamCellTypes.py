@@ -165,14 +165,14 @@ def split_bam(bam, txt, outdir,donor,tissue,max_NM,min_MAPQ,n_trim):
 
 def initialize_parser():
 	parser = argparse.ArgumentParser(description='Split alignment file into cell type specific BAMs')
-	parser.add_argument('--bam', type=str, default=1, help='BAM file to be analysed (Sorted by coordinates)', required = True)
+	parser.add_argument('--bam', type=str, default=1, help='BAM file to be analysed (Sorted by coordinate)', required = True)
 	parser.add_argument('--meta', type=str, default=1, help='Metadata file mapping cell barcodes to cell type information', required = True)
 	parser.add_argument('--id', type=str, default = 'Sample', help='Sample ID', required = False)
 	parser.add_argument('--tissue', type=str, default = None, help='Tissue name. Recommended when different tissues from the same individual are analysed', required = False)
-	parser.add_argument('--max_nM', type=int, default = 1000, help='Maximum number of mismatches permitted to consider a read for further analysis [Default: 1000]', required = False)
-	parser.add_argument('--min_MQ', type=int, default = 255, help='Minimum mapping quality required to consider a read for further analysis [Default: 255]', required = False)
-	parser.add_argument('--n_trim', type=int, default = 0, help='Number of bases trimmed by setting the base quality to 0 at the beginning and end of the read [Default: 0]', required = False)
-	parser.add_argument('--outdir', default = '.', help='Output directory', required = False)
+	parser.add_argument('--max_nM', type=int, default = 1000, help='Maximum number of mismatches permitted to consider reads for analysis [Default: 1000]', required = False)
+	parser.add_argument('--min_MQ', type=int, default = 255, help='Minimum mapping quality required to consider reads for analysis [Default: 255]', required = False)
+	parser.add_argument('--n_trim', type=int, default = 0, help='Number of bases trimmed by setting the base quality to 0 at the beginning and end of each read [Default: 0]', required = False)
+	parser.add_argument('--outdir', default = '.', help='Out directory', required = False)
 	return (parser)
 
 
