@@ -139,6 +139,8 @@ optional arguments:
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
 
+- **Example:** check [here](/docs/SComaticExample.md) to see how to run this step with an example sample.  
+
 ## Step 3: Merging  base count matrices
 In Step 3, SComatic takes as input base count matrices computed in Step 2 for all cell types analysed to merge them into a single base count matrix, which is stored in tsv format. Individual base count matrices to be merged need to be stored in the same directory.
 
@@ -158,6 +160,7 @@ optional arguments:
   --outfile OUTFILE   Out file name
 ```
 
+- **Example:** check [here](/docs/SComaticExample.md) to see how to run this step with an example sample.  
 
 ## Step 4: Detection of somatic mutations
 The last step consists of running two scripts to call somatic mutations.
@@ -228,6 +231,8 @@ optional arguments:
 
 To estimate new Beta binomial parameters whenever required by the user, SComatic provides the following [scripts](/docs/betabinomialestimation.md).
 
+- **Example:** check [here](/docs/SComaticExample.md) to see how to run this step with an example sample.  
+
 ### Step 4.2 
 Scomatic takes the output of the previous step (4.1) and applies additional filters based on external datasets (RNA editing and Panel of Normals), and flags clustered mutations. High quality mutations are marked with the label “PASS” in the FILTER column of the output file. When using the provided [RNA editing](RNAediting) file, please cite the following articles: [Tan et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29022589), [Kiran et al. 2012](https://www.ncbi.nlm.nih.gov/pubmed/23074185) and [Picardi et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/27587585).
 
@@ -253,11 +258,12 @@ optional arguments:
                         variants [Default: 5]
 ```
 
+- **Example:** check [here](/docs/SComaticExample.md) to see how to run this step with an example sample.  
 
 ## [Estimating new beta-binomial parameters](/docs/betabinomialestimation.md)
 
 SComatic models the background error rate of the technology used to generate the single-cell data (e.g., single-cell RNA-seq) using a Beta binomial distribution. Specifically, non-reference allele counts at homozygous reference sites are modelled using a binomial distribution with parameter P (error rate), which is a random variable that follows a Beta distribution with parameters α and β. 
-Default values for the Beta binomial tests used in  Step 4.1 are computed using the data sets described in the manuscript. However, we provide [scripts](/docs/betabinomialestimation.md) to allow the user to reparameterize the Beta binomial using other data sets.
+Default values for the Beta binomial tests used in  Step 4.1 are computed using the data sets described in the manuscript. However, we provide [scripts](/docs/betabinomialestimation.md) to allow the user to reparameterize the Beta binomial using other data sets. 
 
 ## [Generating a custom Panel of Normals](/docs/pon.md)
 
