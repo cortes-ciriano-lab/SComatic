@@ -43,7 +43,7 @@ We show below how to run SComatic for the detection of somatic mutations in scRN
 SComatic consists of the following 4 steps, each of which is run using a different Python script as indicated below.
 
 ## Step 1: Splitting alignment file into cell-type-specific bams
-The first step consists of splitting the BAM file containing aligned sequencing reads for all cell types in a sample  into cell-type-specific BAM files using precomputed cell type annotations. The BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger, 10x Genomics), the "nM" tag (number of mismatches) and the "NH" tag (number of hits).
+The first step consists of splitting the BAM file containing aligned sequencing reads for all cell types in a sample  into cell-type-specific BAM files using precomputed cell type annotations. **The BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger, 10x Genomics), the "nM" tag (number of mismatches) and the "NH" tag (number of hits)**.
 Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the following parameters:
 
 - List of parameters:
