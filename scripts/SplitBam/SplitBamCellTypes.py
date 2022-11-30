@@ -28,11 +28,7 @@ def meta_to_dict(txt,tissue):
 	return(DICT, ALL_CELL_TYPES)
 
 
-def split_bam(bam, txt, outdir,donor,tissue,max_NM,min_MAPQ,n_trim):
-
-	# max_NM = 1000
-	# min_MAPQ = 255
-	# n_trim = 3
+def split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim):
 
 	start = timeit.default_timer()
 
@@ -55,47 +51,69 @@ def split_bam(bam, txt, outdir,donor,tissue,max_NM,min_MAPQ,n_trim):
 
 	# 4. Start read counts
 	total_reads = 0
-	not_CB = 0
-	not_found = 0
-	pass_reads = 0
-	parameter_filter = 0
-	parameter_filter_not_found = 0
-
+	FILTER_dict = {'Total_reads' : 0,'Pass_reads' : 0, 'CB_not_found' : 0, 'CB_not_matched' : 0} # To store filter reasons
+	
 	# 5. Check reads and split them in bam files
 	for read in infile.fetch():
-		total_reads = total_reads + 1
+		FILTER_dict['Total_reads'] += 1 # To count the total number of reads analysed
+		total_reads += 1
 
 		if (total_reads % 5000000 == 0):
 			print ('Number of reads already processed: ' + str(total_reads))
 
+		# Check if CB tag is present
 		try:
 			barcode = read.opt("CB")
 		except:
-			not_CB = not_CB + 1
-			continue
+			FILTER2 = 'CB_not_found'
+			FILTER_dict[FILTER2] += 1
+			continue 
 
+
+		# Check if CB code matches with an annotated cell type
 		barcode = barcode.split("-")[0]
-
 		try:
 			CELL_TYPE = DICT[barcode]
 		except:
-			not_found = not_found + 1
-			continue
+			FILTER2 = 'CB_not_matched'
+			FILTER_dict[FILTER2] += 1
+			continue 
 
 		# Final filters
-		if (max_NM < 1000 or min_MAPQ > 0):
+		FILTER = [] 
+		# Check number of mismatches in the read
+		if (max_NM != None):
 			try:
-				if (read.opt("nM") <= max_NM and read.mapq >= min_MAPQ and read.opt("NH") < 2):
-					pass_reads = pass_reads + 1
-				else:
-					parameter_filter = parameter_filter + 1
-					continue
-			except:
-				parameter_filter_not_found = parameter_filter_not_found + 1
-				continue
-		else:
-			pass_reads = pass_reads + 1
+				if (read.opt("nM") > max_NM):
+					FILTER.append('nM')
+			except KeyError as e:
+				FILTER.append('nM_not_found')
+		# Check number of hits
+		if (max_NH != None):
+			try:
+				if (read.opt("NH") > max_NH):
+					FILTER.append('NH')
+			except KeyError as e:
+				FILTER.append('NH_not_found')
 
+		# Check mapping quality
+		if (min_MAPQ > 0):
+			try:
+				if (read.mapq < min_MAPQ):
+					FILTER.append('MAPQ')
+			except:
+				FILTER.append('MAPQ_not_found')
+
+		# Making a decision about the read (filtered or not)
+		if (len(FILTER) > 0): # If there are reasons to filter read
+			FILTER2 = ';'.join(FILTER)
+			
+			FILTER_dict[FILTER2] = FILTER_dict.get(FILTER2, 0) + 1
+			continue
+		else:
+			FILTER_dict['Pass_reads'] += 1
+
+		# Only for PASS reads
 		# Trim last and first bases of the read (reduce quality) if specified
 		# It does not consider the soft-clip bases at the beginning/end of the read for the counting
 		# It also considers the expected adapter lengths (up to 30) of 10x library prep to remove bases in long soft-clip sequences
@@ -149,13 +167,13 @@ def split_bam(bam, txt, outdir,donor,tissue,max_NM,min_MAPQ,n_trim):
 	for key in DICT_files.keys():
 		DICT_files[key].close()
 
-	# 7. Get report
+	# 7. Get and create report
 	outfile_report = outfile="{}/{}.report.txt".format(outdir, donor, cell_type)
 	stop = timeit.default_timer()
 	endtime = round((stop - start),2)
-	data = [{'Total_reads': total_reads, 'Pass_reads': pass_reads, 'Reads_without_cell_type': not_found, 'Reads_without_CB': not_CB, 'Total_time':endtime}]
-	data_df = pd.DataFrame.from_records(data)
+	FILTER_dict['Total_time'] = endtime
 
+	data_df = pd.DataFrame([FILTER_dict])
 	data_df.to_csv(outfile_report, index = False, sep = '\t')
 
 	# 8. Index bam files
@@ -168,9 +186,9 @@ def initialize_parser():
 	parser.add_argument('--bam', type=str, default=1, help='BAM file to be analysed (Sorted by coordinate)', required = True)
 	parser.add_argument('--meta', type=str, default=1, help='Metadata file mapping cell barcodes to cell type information', required = True)
 	parser.add_argument('--id', type=str, default = 'Sample', help='Sample ID', required = False)
-	parser.add_argument('--tissue', type=str, default = None, help='Tissue name. Recommended when different tissues from the same individual are analysed', required = False)
-	parser.add_argument('--max_nM', type=int, default = 1000, help='Maximum number of mismatches permitted to consider reads for analysis [Default: 1000]', required = False)
-	parser.add_argument('--min_MQ', type=int, default = 255, help='Minimum mapping quality required to consider reads for analysis [Default: 255]', required = False)
+	parser.add_argument('--max_nM', type=int, default = None, help='Maximum number of mismatches permitted to consider reads for analysis. By default, this filter is switched off, although we recommed using --max_nM 5. If applied, this filter requires having the nM tag in the bam file. [Default: Switched off]', required = False)
+	parser.add_argument('--max_NH', type=int, default = None, help='Maximum number of alignment hits permitted to consider reads for analysis. By default, this filter is switched off, although we recommend using --max_NH 1. This filter requires having the NH tag in the bam file. [Default: Switched off]', required = False)
+	parser.add_argument('--min_MQ', type=int, default = 255, help='Minimum mapping quality required to consider reads for analysis. Set this value to 0 to switch this filter off. --min_MQ 255 is recommended for RNA data, and --min_MQ 30 for DNA data. [Default: 255]', required = False)
 	parser.add_argument('--n_trim', type=int, default = 0, help='Number of bases trimmed by setting the base quality to 0 at the beginning and end of each read [Default: 0]', required = False)
 	parser.add_argument('--outdir', default = '.', help='Out directory', required = False)
 	return (parser)
@@ -185,13 +203,14 @@ def main():
 	outdir = args.outdir
 	txt = args.meta
 	donor = args.id
-	tissue = args.tissue
+	tissue = None
 	max_NM = args.max_nM
 	min_MAPQ = args.min_MQ
 	n_trim = args.n_trim
+	max_NH = args.max_NH
 
 	# 2. Split bam file
-	split_bam(bam, txt, outdir,donor,tissue,max_NM,min_MAPQ,n_trim)
+	split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim)
 
 
 #-------------
