@@ -56,20 +56,28 @@ usage: SplitBamCellTypes.py [-h] --bam BAM --meta META [--id ID]
 
 Split bam file by cell types
 
-optional arguments:
   -h, --help       show this help message and exit
-  --bam BAM        Bam file to be analysed (Sorted by coordinate)
-  --meta META      Metadata with cell barcodes per cell type
-  --id ID          Sample id
-  --tissue TISSUE  Tissue name. Recommended when different tissues from the
-                   same individual are analysed
-  --max_nM MAX_NM  Maximum number of mismatches permitted to consider reads for analysis
-                   [Default: 1000]
-  --min_MQ MIN_MQ  Minimum mapping quality required to consider reads for analysis
-                   [Default: 255]
-  --n_trim N_TRIM  Number of bases trimmed (setting the base quality to 0) at
+  --bam BAM        BAM file to be analysed (Sorted by coordinate)
+  --meta META      Metadata file mapping cell barcodes to cell type
+                   information
+  --id ID          Sample ID
+  --max_nM MAX_NM  Maximum number of mismatches permitted to consider reads
+                   for analysis. By default, this filter is switched off,
+                   although we recommed using --max_nM 5. If applied, this
+                   filter requires having the nM tag in the bam file.
+                   [Default: Switched off]
+  --max_NH MAX_NH  Maximum number of alignment hits permitted to consider
+                   reads for analysis. By default, this filter is switched
+                   off, although we recommend using --max_NH 1. This filter
+                   requires having the NH tag in the bam file. [Default:
+                   Switched off]
+  --min_MQ MIN_MQ  Minimum mapping quality required to consider reads for
+                   analysis. Set this value to 0 to switch this filter off.
+                   --min_MQ 255 is recommended for RNA data, and --min_MQ 30
+                   for DNA data. [Default: 255]
+  --n_trim N_TRIM  Number of bases trimmed by setting the base quality to 0 at
                    the beginning and end of each read [Default: 0]
-  --outdir OUTDIR  Output directory
+  --outdir OUTDIR  Out directory
 ```
 
 The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespaces or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported.
