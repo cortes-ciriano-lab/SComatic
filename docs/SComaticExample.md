@@ -32,6 +32,7 @@ python $SCOMATIC/scripts/SplitBam/SplitBamCellTypes.py --bam $SCOMATIC/example_d
         --id ${sample} \
         --n_trim 5 \
         --max_nM 5 \
+        --max_NH 1 \
         --outdir $output_dir1
 ```
 
