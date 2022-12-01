@@ -50,12 +50,13 @@ Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the
 ```
 python scripts/SplitBam/SplitBamCellTypes.py --help
 usage: SplitBamCellTypes.py [-h] --bam BAM --meta META [--id ID]
-                                     [--tissue TISSUE] [--max_nM MAX_NM]
-                                     [--min_MQ MIN_MQ] [--n_trim N_TRIM]
-                                     [--outdir OUTDIR]
+                            [--max_nM MAX_NM] [--max_NH MAX_NH]
+                            [--min_MQ MIN_MQ] [--n_trim N_TRIM]
+                            [--outdir OUTDIR]
 
-Split bam file by cell types
+Split alignment file into cell type specific BAMs
 
+optional arguments:
   -h, --help       show this help message and exit
   --bam BAM        BAM file to be analysed (Sorted by coordinate)
   --meta META      Metadata file mapping cell barcodes to cell type
