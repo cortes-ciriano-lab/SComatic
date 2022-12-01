@@ -44,6 +44,7 @@ SComatic consists of the following 4 steps, each of which is run using a differe
 
 ## Step 1: Splitting alignment file into cell-type-specific bams
 The first step consists of splitting the BAM file containing aligned sequencing reads for all cell types in a sample  into cell-type-specific BAM files using precomputed cell type annotations. **The BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger, 10x Genomics)**. In addition, we strongly suggest generating the input bam files to contain the **"nM" tag** (number of mismatches) and the **"NH" tag** (number of hits), which will be used to remove low-quality reads for downstream analysis (*--max_nM* and *--max_NH* parameters. However, we included the possibility of running SComatic without these last two tags (nM and NH), at the user's own risk. 
+
 Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the following parameters:
 
 - List of parameters:
