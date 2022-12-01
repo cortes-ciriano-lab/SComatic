@@ -96,6 +96,8 @@ AAACCTGTCTTGCAAG  T_cell
 AAACGGGAGACGCACA  T_cell
 ```
 
+In addition to the cell-type specific bam files, this script creates a txt (\*.report.txt) file showing the number of reads filter, and importantly, why there were filtered out. 
+
 - **Example:** check [here](/docs/SComaticExample.md) to see how to run this step with an example sample.  
 
 ## Step 2: Collecting base count information
