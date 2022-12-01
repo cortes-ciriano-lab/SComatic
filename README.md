@@ -37,8 +37,8 @@ If you use the RNA editing database above, please cite the following articles: [
 # Detection of somatic mutations in single-cell data sets using SComatic
 We show below how to run SComatic for the detection of somatic mutations in scRNA-seq data. SComatic requires two data types as input:
 
-- Aligned sequencing reads in BAM format for all cell types analysed. 
-- A file listing precomputed cell type annotations where each row reports the cell barcode and cell type for each cell analysed.
+- Aligned sequencing reads in BAM format for all cell types analysed. **The input BAM file must contain the cell type barcode information in the cell barcode tag “CB” (as reported by popular tools, such as Cell Ranger), and ideally, the "nM" tag (number of mismatches) and the "NH" tag (number of hits)**.
+- A file listing precomputed cell type annotations where each row reports the cell barcode and cell type for each cell analysed. **Importanly, do not include doublets in this file**.
 
 SComatic consists of the following 4 steps, each of which is run using a different Python script as indicated below.
 
@@ -80,7 +80,7 @@ Split bam file by cell types
   --outdir OUTDIR  Out directory
 ```
 
-The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespaces or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported.
+The precomputed cell type annotation file provided with the --meta parameter must contain at least the following two columns (Index for cell barcode ID and Cell_type for the precomputed cell type annotation) and must be a tab-separated file. Cell type annotations containing whitespaces or any of the following special characters (~ . ` ! @ # $ % ^ & * ( ) { | } / \ : ; " ' < > ? , = +) are not supported. Dashes and underscores are supported. Whitespace characters in the filenames are not supported. **Importanly, do not include doublets in this file**
 
 ```
 Index Cell_type
