@@ -105,10 +105,10 @@ python $SCOMATIC/scripts/BaseCellCalling/BaseCellCalling.step2.py \
           --pon $PON
 ```
 
-If you only want to keep the somatic mutations that passed all filters, you can do it with a simple awk command:
+As done in the datasets analysed in our study, we suggest intersecting the variants with the high quality regions of the human genome (provided in *SComatic/bed_files_of_interest/UCSC.k100_umap.without.repeatmasker.bed*). Hence, if you want to do this intersection and keep the somatic mutations that passed all filters, you can do it with a simple command:
 
 ```
-awk '$1 ~ /^#/ || $6 == "PASS"' ${output_dir4}/${sample}.calling.step2.tsv > ${output_dir4}/${sample}.calling.step2.pass.tsv
+bedtools intersect -header -a ${output_dir4}/${sample}.calling.step2.tsv -b $SCOMATIC/bed_files_of_interest/UCSC.k100_umap.without.repeatmasker.bed | awk '$1 ~ /^#/ || $6 == "PASS"' > ${output_dir4}/${sample}.calling.step2.pass.tsv
 ```
 
 ## Other SComatic functionalities
