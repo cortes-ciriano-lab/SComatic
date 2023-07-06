@@ -83,9 +83,15 @@ python $SCOMATIC/scripts/SingleCellGenotype/SingleCellGenotype.py --bam $cell_ty
 ```
 
 ## 5. How do different cell type labels (p.e. different levels of granularity) affect the SComatic performance?
+SComatic can be run using different levels of granularity in terms of cell type annotations. 
+
+As illustrated in the schematic below, in the case of non-neoplastic samples the relatedness between cell types from a development perspective determines which types of mutations can be detected. Using very granular cell type annotations that consider e.g. two cell types from the same differentiation hierarchy as different cell types, will remove any mutation present in the progenitor common to both cell types (assuming that sufficient sampling of all cell types in the data set analysed is achieved). As a result, only mutations acquired after clonal diversification will be detected (marked in green in the schematic). In contrast, mutations acquired in progenitor/stem cells and during early development will be discounted based on the fact that they will be present in all descendant cells (marked in red in the schematic). It follows from the preceding that mutations acquired very early during development will likely be considered germline based on their presence in multiple cell types when calling mutations using diverse tissue types from the same individual. By contrast, using broader cell type annotations (e.g., epithelial, immune, etc) permits the detection of mutations accumulated over longer periods of time in e.g., adult stem cells up to the point of lineage diversification. Overall, determining the granularity of the cell type annotations depends on the biological question of interest. We note that SComatic can be run using cell type annotations of variable granularity easily, which should enhance the applicability of our algorithm to diverse research areas.
+
 <div align="center">
 <img src="/docs/Granularity_plot.png" width="60%">
 </div>
 
+
+For the analysis of cancer samples, we note that the effect of cell type granularity is less relevant as compared to the analysis of non-neoplastic samples, in that somatic mutations are only expected to be detected in the cancer cells. Thus, unless cell state annotations are used for the cancer cells, mutations present in cancer cells would be readily detected when running SComatic if one cell type annotation is used for all cancer cells and non-neoplastic cell types are included to remove germline polymorphisms.
 
 
