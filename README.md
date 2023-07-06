@@ -295,7 +295,7 @@ This section answers some of the users' most recurrent doubts when running SComa
 2. [How can we perform the variant annotation with the SComatic output?](/docs/faqs.md#2-how-can-we-perform-the-variant-annotation-with-the-scomatic-output)
 3. [Can SComatic work with other types of PoN files?](/docs/faqs.md#3-can-scomatic-work-with-other-types-of-pon-files)
 4. [Can we use the calls from other callers to genotype unique cells using SComatic?](/docs/faqs.md#4-can-we-use-the-calls-from-other-callers-to-genotype-unique-cells-using-scomatic)
-5. [How do different cell type labels (p.e. different levels of granularity) affect the SComatic performance?](/docs/faqs.md#5-how-do-different-cell-type-labels-pe-different-levels-of-granularity-affect-the-scomatic-performance)
+5. [How do different cell type labels (e.g. different levels of granularity) affect the SComatic performance?](docs/faqs.md#5-how-do-different-cell-type-labels-eg-different-levels-of-granularity-affect-the-scomatic-performance)
 6. [What does it happen if CellRanger does not properly trim all non-genomic sequences (adapters) from the reads?](/docs/faqs.md#6-what-does-it-happen-if-cellranger-does-not-properly-trim-all-non-genomic-sequences-adapters-from-the-reads)
 
 ## Contact
