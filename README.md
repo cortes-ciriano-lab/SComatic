@@ -288,6 +288,16 @@ SComatic provides the following additional functionalities, which are described 
 - Computing the number of callable sites per cell
 - Computing the genotype for each cell at the variant sites
 
+## [FAQs - Frequently asked questions](/docs/faqs.md)
+In this section, we try to answer some of the most recurrent doubts that users had when running SComatic.
+
+1. [Are the SComatic parameters for scATAC-seq data the same as for scRNA-seq data?](/docs/faqs.md#1-are-the-scomatic-parameters-for-scatac-seq-data-the-same-as-for-scrna-seq-data)
+2. [How can we perform the variant annotation with the SComatic output?](/docs/faqs.md#2-how-can-we-perform-the-variant-annotation-with-the-scomatic-output)
+3. [Can SComatic work with other types of PoN files?](/docs/faqs.md#3-can-scomatic-work-with-other-types-of-pon-files)
+4. [Can we use the calls from other callers to genotype unique cells using SComatic?](/docs/faqs.md#4-can-we-use-the-calls-from-other-callers-to-genotype-unique-cells-using-scomatic)
+5. [How do different cell type labels (p.e. different levels of granularity) affect the SComatic performance?](/docs/faqs.md#5-how-do-different-cell-type-labels-pe-different-levels-of-granularity-affect-the-scomatic-performance)
+6. [What does it happen if CellRanger does not properly trim all non-genomic sequences (adapters) from the reads?](/docs/faqs.md#6-what-does-it-happen-if-cellranger-does-not-properly-trim-all-non-genomic-sequences-adapters-from-the-reads)
+
 ## Contact
 If you have any comments or suggestions about SComatic please raise an issue or contact us: 
 
