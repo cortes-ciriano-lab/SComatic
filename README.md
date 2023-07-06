@@ -289,7 +289,7 @@ SComatic provides the following additional functionalities, which are described 
 - Computing the genotype for each cell at the variant sites
 
 ## [FAQs - Frequently asked questions](/docs/faqs.md)
-In this section, we try to answer some of the most recurrent doubts that users had when running SComatic.
+This section answers some of the users' most recurrent doubts when running SComatic.
 
 1. [Are the SComatic parameters for scATAC-seq data the same as for scRNA-seq data?](/docs/faqs.md#1-are-the-scomatic-parameters-for-scatac-seq-data-the-same-as-for-scrna-seq-data)
 2. [How can we perform the variant annotation with the SComatic output?](/docs/faqs.md#2-how-can-we-perform-the-variant-annotation-with-the-scomatic-output)
