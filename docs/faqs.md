@@ -84,6 +84,7 @@ python $SCOMATIC/scripts/SingleCellGenotype/SingleCellGenotype.py --bam $cell_ty
 
 ## 5. How do different cell type labels (p.e. different levels of granularity) affect the SComatic performance?
 
+<img src="/docs/Granularity_plot.png" width="80%">
 
 
 
