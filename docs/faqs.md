@@ -94,4 +94,9 @@ As illustrated in the schematic below, in the case of non-neoplastic samples the
 
 For the analysis of cancer samples, we note that the effect of cell type granularity is less relevant as compared to the analysis of non-neoplastic samples, in that somatic mutations are only expected to be detected in the cancer cells. Thus, unless cell state annotations are used for the cancer cells, mutations present in cancer cells would be readily detected when running SComatic if one cell type annotation is used for all cancer cells and non-neoplastic cell types are included to remove germline polymorphisms.
 
+## 6. What does it happen if CellRanger does not properly trim all non-genomic sequences (adapters) from the reads?
+This might be an issue and could increase the number of false positive calls in the final call set. If this is the case, you can use the parameters _--n_trim  NUMER_OF_BASES_TO_IGNORE_ in _Step1_ (_SplitBamCellTypes.py_) to ignore the first and last bases of each read. In addition, when running the [_CellRanger count_](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/tutorial_ct) tool, provide the _–-chemistry_ parameter as precisely as possible. It will help to remove these non-desired regions. 
+
+
+
 
