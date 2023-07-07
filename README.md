@@ -1,9 +1,9 @@
 # SComatic
 SComatic is a tool that provides functionalities to detect somatic single-nucleotide mutations in high-throughput single-cell genomics and transcriptomics data sets, such as single-cell RNA-seq and single-cell ATAC-seq.
 
-If you use SComatic (see **License** at the bottom of this page), please cite our publication [Muyas et al. 2022](https://www.biorxiv.org/content/10.1101/2022.11.22.517567v1).
+If you use SComatic (see **License** at the bottom of this page), please cite our publication [Muyas et al. 2023](https://www.nature.com/articles/s41587-023-01863-z).
 
-For further details on SComatic, its assumptions, limitations and applications, please see [Muyas et al. 2022](https://www.biorxiv.org/content/10.1101/2022.11.22.517567v1).
+For further details on SComatic, its assumptions, limitations and applications, please see [Muyas et al. 2023](https://www.nature.com/articles/s41587-023-01863-z).
 
 ![Algorithm](/docs/Algorithm.jpeg)
 
