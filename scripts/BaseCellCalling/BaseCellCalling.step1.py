@@ -223,7 +223,7 @@ def variant_calling_step1(file,alpha1,beta1,alpha2,beta2,min_ac_cells,min_ac_rea
 									# Strand bias test (Fisher's exact test between strands, comparing alt and ref distributions)
 									if (Fisher_cutoff != 1):
 										Fw_dict = {Alleles[x]:int(bcf[x]) for x in range(len(bcf)) if Alleles[x]}
-										Rv_dict = {Alleles[x]:int(bcf[x]) for x in range(len(bcf)) if Alleles[x]}
+										Rv_dict = {Alleles[x]:int(bcr[x]) for x in range(len(bcr)) if Alleles[x]}
 										fisher_p = "|".join([str(round(stats.fisher_exact([[Fw_dict[x], Rv_dict[x]], [Fw_dict[REF], Rv_dict[REF]]])[1],4)) for x in Alt_candidates])
 										Fisher_p.append(fisher_p)
 
