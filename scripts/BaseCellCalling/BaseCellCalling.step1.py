@@ -11,7 +11,7 @@ import scipy.stats as stats
 import pandas as pd
 
 def reinit_template(diff_cell_types,min_reads,min_cells):
-	# Creates empty dicctionary for coverage counts
+	# Creates empty dictionary for coverage counts
 	TEMPLATE = {min_reads:0, min_cells:0, 5: 0, 10: 0, 20: 0,30: 0}
 	INFORMATIVE_POSITIONS_TEMPLATE = {x:{'NC':TEMPLATE.copy(),'DP':TEMPLATE.copy()} for x in diff_cell_types}
 	return(INFORMATIVE_POSITIONS_TEMPLATE, TEMPLATE)
@@ -181,7 +181,7 @@ def variant_calling_step1(file,alpha1,beta1,alpha2,beta2,min_ac_cells,min_ac_rea
 								bc = BC.split(":")
 								bq = BQ.split(":")
 								bcf = BCf.split(":") # forward bases
-								bcr = BCr.split(":") # reverese bases
+								bcr = BCr.split(":") # reverse bases
 
 								# Sum all alternative reads
 								Alts2 = sum([int(bc[x]) for x in range(len(bc)) if Alleles[x] not in [REF,"O"]])
