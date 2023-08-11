@@ -105,7 +105,8 @@ def MakeWindows(CONTIG, FASTA, bed, bed_out, window):
 	
 	## Pass3. Makewindows in final bed file based on the window sizes specified as argument
 	final_bed = a3.window_maker(a3,w=window)
-	inFasta.close()
+	if (bed == ''):
+		inFasta.close()
 	return(final_bed)
 
 def BaseCount(LIST, REF_BASE):
