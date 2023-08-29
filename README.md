@@ -102,7 +102,7 @@ In addition to the cell-type specific bam files, this script creates a txt (\*.r
 - **Example:** check [here](/docs/SComaticExample.md) to see how to run this step with an example sample.  
 
 ## Step 2: Collecting base count information
-Base count information for each cell type and for every position if the genome is recorded in a base count matrix indexed by cell types and genomic coordinates. 
+Base count information for each cell type and for every position in the genome is recorded in a base count matrix indexed by cell types and genomic coordinates. 
 
 The command line to run this step is: 
 
