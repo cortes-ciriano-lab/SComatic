@@ -23,6 +23,11 @@ pip install -r requirements.txt
 ```R
 Rscript r_requirements_install.R
 ```
+If your R version is >= 3.6.0 but < 4, you might have issues installing the `VGAM` package. If this is the case, try this:
+```R
+Rscript r_requirements_install.v3_6.R
+```
+
 - Unpack PoN (Panel of Normals) files:
 ```
 gunzip PoNs/PoN.scRNAseq.hg38.tsv.gz
