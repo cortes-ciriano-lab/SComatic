@@ -111,7 +111,7 @@ def main():
 	os.remove(temp)
 
 # -------------------------
-# PoN construction
+# Main computation
 # -------------------------
 if __name__ == '__main__':
 	start = timeit.default_timer()
