@@ -78,7 +78,6 @@ def main():
 
 			print (line)
 			
-			#print (UP, DOWN)
 			try:
 				if (longestRun(UP) < 4 and longestRun(DOWN) < 4):
 					UP_base = UP[-1]
@@ -106,8 +105,8 @@ def main():
 	df.rename({0: 'Count'}, axis=1, inplace=True)
 	df.to_csv(outfile, index=False)
 
-	# # Remove temp file
-	# os.remove(temp)
+	# Remove temp file
+	os.remove(temp)
 
 # -------------------------
 # PoN construction
