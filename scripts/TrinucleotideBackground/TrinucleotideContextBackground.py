@@ -34,9 +34,6 @@ def main():
 	in_tsv = args.in_tsv
 	outfile = args.out_file
 
-	# in_tsv = '/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/Li_Cell2020_cSCC/results/step1.targeted_regions.files.tsv'
-	# outfile = '/nfs/research/icortes/DATA/scRNA_somatic_variant_calling/DATA/Li_Cell2020_cSCC/results/test.tsv'
-
 	# Temp file and folder
 	temp = outfile + '.temp'
 	temp_folder=os.path.dirname(outfile)
