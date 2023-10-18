@@ -37,7 +37,9 @@ def main():
 	# Temp file and folder
 	temp = outfile + '.temp'
 	temp_folder=os.path.dirname(outfile)
-
+	if (temp_folder == ''):
+		temp_folder = "."
+	
 	# 1. Concatenate and create temp calling file
 	print ('-----------------------------------------------------------')
 	print ('1. Preparing temp file...')
