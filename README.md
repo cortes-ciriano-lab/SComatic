@@ -292,6 +292,7 @@ SComatic provides the following additional functionalities, which are described 
 - Computing the number of callable sites per cell type
 - Computing the number of callable sites per cell
 - Computing the genotype for each cell at the variant sites
+- Computing the trinucleotide context background
 
 ## [FAQs - Frequently asked questions](/docs/faqs.md)
 This section answers some of the users' most recurrent doubts when running SComatic.
