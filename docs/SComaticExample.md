@@ -176,3 +176,17 @@ for bam in $(ls -d $output_dir1/*bam);do
 done
 ```
 
+#### Computing the trinucleotide context background
+
+```
+sample=Example
+output_dir8=$output_dir/TrinucleotideContext
+output_dir4=$output_dir/Step4_VariantCalling # Already defined in previous steps
+mkdir -p $output_dir8
+
+echo ${output_dir4}/${sample}.calling.step1.tsv > ${output_dir8}/step1_files.txt
+
+python $SCOMATIC/scripts/TrinucleotideBackground/TrinucleotideContextBackground.py \
+        --in_tsv ${output_dir8}/step1_files.txt \
+        --out_file ${output_dir8}/TrinucleotideBackground.txt
+```
