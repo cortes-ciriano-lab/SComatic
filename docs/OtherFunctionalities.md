@@ -126,3 +126,5 @@ optional arguments:
 
 ```
 
+**Example:** check [here](/docs/SComaticExample.md) to see how to run this script with an example sample.  
+
