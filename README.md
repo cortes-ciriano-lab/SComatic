@@ -303,6 +303,7 @@ This section answers some of the users' most recurrent doubts when running SComa
 4. [Can we use the calls from other callers to genotype unique cells using SComatic?](/docs/faqs.md#4-can-we-use-the-calls-from-other-callers-to-genotype-unique-cells-using-scomatic)
 5. [How do different cell type labels (e.g. different levels of granularity) affect the SComatic performance?](docs/faqs.md#5-how-do-different-cell-type-labels-eg-different-levels-of-granularity-affect-the-scomatic-performance)
 6. [What does it happen if CellRanger does not properly trim all non-genomic sequences (adapters) from the reads?](/docs/faqs.md#6-what-does-it-happen-if-cellranger-does-not-properly-trim-all-non-genomic-sequences-adapters-from-the-reads)
+7. [How to interpret the SingleCellGenotype.py output?](https://github.com/cortes-ciriano-lab/SComatic/blob/main/docs/faqs.md#7-how-to-interpret-the-singlecellgenotypepy-output)
 
 ## Contact
 If you have any comments or suggestions about SComatic please raise an issue or contact us: 
