@@ -106,6 +106,8 @@ optional arguments:
 
 **Example:** check [here](/docs/SComaticExample.md) to see how to run this script with an example sample.  
 
+Description of the output [here](https://github.com/cortes-ciriano-lab/SComatic/blob/main/docs/faqs.md#7-how-to-interpret-the-singlecellgenotypepy-output)
+
 ## Computing the trinucleotide context background
 
 ```
