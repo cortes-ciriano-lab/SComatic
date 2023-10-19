@@ -97,6 +97,41 @@ For the analysis of cancer samples, we note that the effect of cell type granula
 ## 6. What does it happen if CellRanger does not properly trim all non-genomic sequences (adapters) from the reads?
 This might be an issue and could increase the number of false positive calls in the final call set. If this is the case, you can use the parameters _--n_trim  NUMER_OF_BASES_TO_IGNORE_ in _Step1_ (_SplitBamCellTypes.py_) to ignore the first and last bases of each read. In addition, when running the [_CellRanger count_](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/tutorial_ct) tool, provide the _–-chemistry_ parameter as precisely as possible. It will help to remove these non-desired regions. 
 
+## 7. How to interpret the SingleCellGenotype.py output? 
 
+This script provides base count and allele information for all cells with reads covering each variant site. By default, all cells (mutated and non-mutated)  will be present in the output file (see `--alt_flag` parameter to change it). However, it is important to understand the meaning of each one of the columns of this output file to properly interpret these results. Here a short description:
 
+| Column | Description |
+| --- | --- |
+| #CHROM |  Chromosome carrying the mutation |
+| Start |  Start genomic coordinate |
+| End |  End genomic coordinate |
+| REF |  Reference allele |
+| ALT_expected |  Alternative allele as described in the input file (`--infile`) |
+| Cell_type_expected |  Cell types harbouring the mutation as described in the input file (`--infile`) |
+| Num_cells_expected |  Number of expected cells carrying the mutation as described in the input file (`--infile`) |
+| CB | Unique cell barcode analysed |
+| Cell_type_observed | Cell type attributed to the analysed _CB_ according to the input metadata file (`--meta`) |
+| Base_observed | Allele observed in this _CB_ |
+| Num_reads | Number of reads carrying the _Base_observed_ | 
 
+<br>
+
+Let's understand this table with an example. Looking at our [SComatic example data](https://github.com/cortes-ciriano-lab/SComatic/blob/main/docs/SComaticExample.md), we will focus on the variant site _chr10-29559501_ and the _SComatic/example_data/results/SingleCellAlleles/Epithelial_cells.single_cell_genotype.tsv_ file generated.
+
+```
+#CHROM	Start	End	REF	ALT_expected	Cell_type_expected	Num_cells_expected	CB	Cell_type_observed	Base_observed	Num_reads
+chr10	29559501	29559501	A	T	Epithelial_cells	2	AGTCTTTGTGCATCTA	Epithelial_cells	A	5
+chr10	29559501	29559501	A	T	Epithelial_cells	2	CCCTCCTAGGCTAGGT	Epithelial_cells	A	1
+chr10	29559501	29559501	A	T	Epithelial_cells	2	GGGTCTGTCTTGAGGT	Epithelial_cells	T	2
+chr10	29559501	29559501	A	T	Epithelial_cells	2	GTCCTCAAGGCTCATT	Epithelial_cells	T	2
+chr10	29559501	29559501	A	T	Epithelial_cells	2	GAGTCCGAGGGTGTTG	Epithelial_cells	A	2
+```
+
+The columns `ALT_expected`, `Cell_type_expected`	and `Num_cells_expected` correspond to the values observed in the `--infile Example.calling.step2.pass.tsv`, so they represent the calls at cell type resolution. 
+
+In contrast, the columns `CB`, 	`Cell_type_observed`, `Base_observed` and `Num_reads` correspond to the allele observations at unique cell resolution when interrogating the bam files.  
+
+Each CB can be presented in the output file in as many rows as different alleles are found per cell, although in most cases, we only observed one allele per cell (so one row per unique CB). In order to find the alleles harbouring the called mutation, we have to look for those rows (unique CBs) where `ALT_expeced == Base_observed` and  `Cell_type_expected == Cell_type_observed`. In general terms, CBs not accomplishing these conditions can be understood as noise or non-mutated cells. 
+
+Although this script is designed to be run with the SComatic calls, it can also be run with an [external vcf file](https://github.com/cortes-ciriano-lab/SComatic/edit/main/docs/faqs.md#4-can-we-use-the-calls-from-other-callers-to-genotype-unique-cells-using-scomatic). As in most of the vcf-based cases we do not know the `Cell_type_expected`, we cannot check the `Cell_type_expected == Cell_type_observed` condition. However, we still can check the `ALT_expeced == Base_observed` condition. 
