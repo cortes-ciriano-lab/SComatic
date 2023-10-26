@@ -589,7 +589,6 @@ def initialize_parser():
 	parser.add_argument('--max_cell_types', type=int, default = 1, help='Maximum number of cell types carrying a mutation to make a somatic call. [Default: 1]', required = False)
 	parser.add_argument('--min_cell_types', type=int, default = 2, help='Minimum number of cell types with enough coverage and cell to consider a site as callable [Default: 2]', required = False)
 	parser.add_argument('--fisher_cutoff', type=float, default = 1, help='P-value cutoff for the Fisher exact test performed to detect strand bias. Expected float value, if applied, we recommend 0.001. By default, this test is switched off with a value of 1 [Default: 1]', required = False)
-	parser.add_argument('--min_distance', type=int, default = 5, help='Minimum distance allowed between potential somatic variants [Default: 5]', required = False)
 	parser.add_argument('--alpha1', type=float, default = 0.260288007167716, help='Alpha parameter for Beta-binomial distribution of read counts. [Default: 0.260288007167716]', required = False)
 	parser.add_argument('--beta1', type=float, default = 173.94711910763732, help='Beta parameter for Beta-binomial distribution of read counts. [Default: 173.94711910763732]', required = False)
 	parser.add_argument('--alpha2', type=float, default = 0.08354121346569514, help='Alpha parameter for Beta-binomial distribution of cell counts. [Default: 0.08354121346569514]', required = False)
@@ -614,7 +613,6 @@ def main():
 	max_cell_types = args.max_cell_types
 	min_cell_types = args.min_cell_types
 	fisher_cutoff = args.fisher_cutoff
-	distance = args.min_distance
 	alpha1 = args.alpha1
 	beta1 = args.beta1
 	alpha2 = args.alpha2
