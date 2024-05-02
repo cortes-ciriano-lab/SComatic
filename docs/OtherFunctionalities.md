@@ -128,3 +128,47 @@ optional arguments:
 
 **Example:** check [here](/docs/SComaticExample.md) to see how to run this script with an example sample.  
 
+## Computing germline genotypes for known variants in single-cell datasets
+
+This script is developed to genotype known polymorphic sites in the single-cell data. It takes as input the output of step 4.1 of the SComatic tool (obtained by the BaseCellCalling.step1.py script) and produces, by default, a new TSV file (*GermlineCalls.SComatic.tsv) with the germline variant status per site and sample. If the *--ethnicity Yes* parameter is specified, it produces an extra TSV file (*GermlineCalls.SComatic.ethnicity.tsv) required for running other tools, such as scAI-SNP.
+
+The commands for running this tool are as follows:
+
+```
+python scripts/GermlineGenotyper/GermlineGenotyper.py --help
+usage: scripts/GermlineGenotyper/GermlineGenotyper.py [-h] --snp SNP --tsv TSV --prefix PREFIX
+                                   [--min_reads MIN_READS]
+                                   [--min_cells MIN_CELLS]
+                                   [--min_cells_types_exp MIN_CELLS_TYPES_EXP]
+                                   [--min_cov MIN_COV]
+                                   [--min_total_cells MIN_TOTAL_CELLS]
+                                   [--ethnicity {Yes,No}]
+
+Script to call germline variants in a list of polymorphic sites
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --snp SNP             File with SNPs to check. Format: chr:pos:ref:alt
+  --tsv TSV             TSV file obtained by the
+                        BaseCellCalling/BaseCellCalling.step1.py script
+  --prefix PREFIX       Prefix for the out files. Full path and prefix
+                        recommended
+  --min_reads MIN_READS
+                        Minimum number of reads supporting the alternative
+                        allele [Default = 3]
+  --min_cells MIN_CELLS
+                        Minimum number of cells harbouring the alternative
+                        allele [Default = 3]
+  --min_cells_types_exp MIN_CELLS_TYPES_EXP
+                        Minimum number of cell types with enough expression to
+                        get a calls [Default = 1]
+  --min_cov MIN_COV     Minimum number of reads covering the variant site.
+                        [Default = 5 ]
+  --min_total_cells MIN_TOTAL_CELLS
+                        Minimum number of cells with at least one read
+                        covering the variant site. [Default = 5]
+  --ethnicity {Yes,No}  Specify if ethnicity format file should be created.
+                        [Default: No]
+```
+
+
