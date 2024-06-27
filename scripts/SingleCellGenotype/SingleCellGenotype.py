@@ -204,11 +204,12 @@ def meta_to_dict(meta_file,tissue):
 	metadata['Index_clean'] = metadata['Index'].str.replace('-.*$','',regex=True)
 
 	# If tissue provided, append tissue id to cell type to be recognised in downstream analysis
+	# Sanitise cell types as these will translate to file names later
 	if tissue == None:
-		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(' ','_',regex=True)
+		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(r'[^0-9a-zA-Z_]','_',regex=True)
 	else:
-		tissue = tissue.replace(" ", "_")
-		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(' ','_',regex=True)
+		tissue = tissue.replace(r'[^0-9a-zA-Z_]', "_")
+		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(r'[^0-9a-zA-Z_]','_',regex=True)
 		metadata['Cell_type_clean'] = str(tissue) + '__' + metadata['Cell_type_clean'].astype(str)
 
 	# Create dicitionary with cell types and cell barcodes
