@@ -311,6 +311,7 @@ def main():
 			if (cur_chr == ''):	
 				cur_chr = CHROM
 				cur_pos = POS
+				last_pos = POS
 				LIST=[]
 
 			DIFF = POS-cur_pos
@@ -319,7 +320,7 @@ def main():
 				LIST.append(POS-1) # Necessary to subtract one for pysam coordinates
 				count = count + 1
 			else:
-				ID=str(cur_chr) + '_' + str(cur_pos) + '_' + str(POS)
+				ID=str(cur_chr) + '_' + str(cur_pos) + '_' + str(last_pos)
 				DICT_sites[ID] = set(LIST)
 
 				# Re-start counting
@@ -327,7 +328,8 @@ def main():
 				cur_pos = POS
 				count=0
 				LIST= [POS-1] # Necessary to subtract one for pysam coordinates
-
+			last_pos = POS
+			
 		# Save results with last iteration in file
 		if (count > 0):
 			ID=str(cur_chr) + '_' + str(cur_pos) + '_' + str(POS)
