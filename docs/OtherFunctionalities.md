@@ -100,6 +100,9 @@ optional arguments:
                         Default = 30
   --min_mq MIN_MQ       Minimum mapping quality required to analyse read.
                         Default = 255
+  --max_dp MAX_DP       Maximum number of reads per genomic site that are read by pysam pileup,
+                        to save time and memory. Set this value to 0 to switch this filter off
+                        (recommended for high-depth sequencing). [Default: 8000]
   --tissue TISSUE       Tissue of the sample
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
