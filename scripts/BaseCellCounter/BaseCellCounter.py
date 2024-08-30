@@ -176,7 +176,7 @@ def EasyReadPileup(LIST, REF_BASE):
 			
 	return (NEW_LIST,AC)
 
-def run_interval(interval, BAM, FASTA, MIN_COV, MIN_CC,MIN_AF, MIN_AC, tmp_dir, BQ, MQ):
+def run_interval(interval, BAM, FASTA, MIN_COV, MIN_CC,MIN_AF, MIN_AC, tmp_dir, BQ, MQ, MAX_DP):
 	
 	# Coordinates to analyse
 	CHROM  =  interval[0]
@@ -185,7 +185,7 @@ def run_interval(interval, BAM, FASTA, MIN_COV, MIN_CC,MIN_AF, MIN_AC, tmp_dir, 
 	
 	# Get pileup read counts from coordinates
 	bam = pysam.AlignmentFile(BAM)
-	i = bam.pileup(CHROM, START, END, min_base_quality = BQ, min_mapping_quality = MQ, ignore_overlaps = False)
+	i = bam.pileup(CHROM, START, END, min_base_quality = BQ, min_mapping_quality = MQ, max_depth = MAX_DP, ignore_overlaps = False)
 	
 	# Load reference file. Mandatory to be done inside function to avoid overlap problems during multiprocessing
 	inFasta = pysam.FastaFile(FASTA)
@@ -334,6 +334,7 @@ def initialize_parser():
 	parser.add_argument('--min_cc', type=int, default = 5, help='Minimum number of cells required to consider a genomic site for mutation calling. Default: 5', required = False)
 	parser.add_argument('--min_bq', type=int, default = 20, help='Minimum base quality to compute allele counts. Default: 20', required = False)
 	parser.add_argument('--min_mq', type=int, default = 255, help='Minimum mapping quality required to consider a read for analysis. Default: 255', required = False)
+	parser.add_argument('--max_dp', type=int, default = 8000, help='Maximum number of reads per genomic site that are read in the pileup (to save time and memory). Set to zero to remove the limit.', required = False)
 	parser.add_argument('--tmp_dir', type=str, default = '.', help='Path to a directory to be used to store temporary files during processing', required = False)
 
 	return (parser)
@@ -360,6 +361,7 @@ def main():
 	MIN_CC = args.min_cc
 	MIN_BQ = args.min_bq
 	MIN_MQ = args.min_mq
+	MAX_DP = args.max_dp
 	tmp_dir = args.tmp_dir
 
 	# 0. If out file is empty, take the name of the bam file
@@ -392,7 +394,7 @@ def main():
 		# Step 3.1: Use loop to parallelize
 		for row in BED:
 			# This funtion writes in temp files the results
-			pool.apply_async(run_interval, args=(row, BAM, FASTA, MIN_COV, MIN_CC, MIN_AF, MIN_AC, tmp_dir, MIN_BQ, MIN_MQ), callback=collect_result)
+			pool.apply_async(run_interval, args=(row, BAM, FASTA, MIN_COV, MIN_CC, MIN_AF, MIN_AC, tmp_dir, MIN_BQ, MIN_MQ, MAX_DP), callback=collect_result)
 				   
 		# Step 3.2: Close Pool and let all the processes complete    
 		pool.close()
@@ -400,7 +402,7 @@ def main():
 	else:
 		for row in BED:
 			# This funtion writes in temp files the results
-			collect_result(run_interval(row, BAM, FASTA, MIN_COV, MIN_CC, MIN_AF, MIN_AC,tmp_dir, MIN_BQ, MIN_MQ))
+			collect_result(run_interval(row, BAM, FASTA, MIN_COV, MIN_CC, MIN_AF, MIN_AC,tmp_dir, MIN_BQ, MIN_MQ, MAX_DP))
 	
 	# 4. Write final file
 	concatenate_sort_temp_files_and_write(out_file, tmp_dir, ID)
