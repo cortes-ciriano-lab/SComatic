@@ -83,7 +83,7 @@ def EasyReadPileup(LIST, REF_BASE):
 			
 	return (NEW_LIST,AC)
 
-def run_interval(code,var_dict,meta_dict,BAM,FASTA,tmp_dir,BQ,MQ,ALT_FLAG):
+def run_interval(code,var_dict,meta_dict,BAM,FASTA,tmp_dir,BQ,MQ,MAX_DP,ALT_FLAG):
 	# List of positions	
 	interval = var_dict[code]
 	
@@ -123,7 +123,7 @@ def run_interval(code,var_dict,meta_dict,BAM,FASTA,tmp_dir,BQ,MQ,ALT_FLAG):
 
 	# Get pileup read counts from coordinates
 	bam = pysam.AlignmentFile(BAM)
-	i = bam.pileup(CHROM, START, END, min_base_quality = BQ, min_mapping_quality = MQ, ignore_overlaps = False)
+	i = bam.pileup(CHROM, START, END, min_base_quality = BQ, min_mapping_quality = MQ, max_depth = MAX_DP, ignore_overlaps = False)
 	
 	# Load reference file. Mandatory to be done inside function to avoid overlap problems during multiprocessing
 	inFasta = pysam.FastaFile(FASTA)
@@ -305,6 +305,7 @@ def initialize_parser():
 	parser.add_argument('--bin', type=int, default=50000, help='Bin size for running the analysis [Default 50000]', required = False)
 	parser.add_argument('--min_bq', type=int, default = 30, help='Minimum base quality permited for the base counts. Default = 30', required = False)
 	parser.add_argument('--min_mq', type=int, default = 255, help='Minimum mapping quality required to analyse read. Default = 255', required = False)
+	parser.add_argument('--max_dp', type=int, default = 8000, help='Maximum number of reads per genomic site that are read in the pileup (to save time and memory). Set to zero to remove the limit.', required = False)
 	parser.add_argument('--tissue', type=str, default=None, help='Tissue of the sample', required = False)
 	parser.add_argument('--tmp_dir', type=str, default = 'tmpDir', help='Temporary folder for tmp files', required = False)
 
@@ -330,6 +331,7 @@ def main():
 	tissue = args.tissue
 	BQ = args.min_bq
 	MQ = args.min_mq
+	MAX_DP = args.max_dp
 	ALT_FLAG = args.alt_flag
 
 	# Set outfile name
@@ -357,7 +359,7 @@ def main():
 		# Step 3.1: Use loop to parallelize
 		for row in DICT_VARIANTS.keys():
 			# This funtion writes in temp files the results
-			pool.apply_async(run_interval, args=(row,DICT_VARIANTS,META_DICT,BAM,FASTA,tmp_dir,BQ,MQ,ALT_FLAG), callback=collect_result)
+			pool.apply_async(run_interval, args=(row,DICT_VARIANTS,META_DICT,BAM,FASTA,tmp_dir,BQ,MQ,MAX_DP,ALT_FLAG), callback=collect_result)
 				   
 		# Step 3.2: Close Pool and let all the processes complete    
 		pool.close()
@@ -365,7 +367,7 @@ def main():
 	else:
 		for row in DICT_VARIANTS.keys():
 			# This funtion writes in temp files the results
-			collect_result(run_interval(row,DICT_VARIANTS,META_DICT,BAM,FASTA,tmp_dir,BQ,MQ,ALT_FLAG))
+			collect_result(run_interval(row,DICT_VARIANTS,META_DICT,BAM,FASTA,tmp_dir,BQ,MQ,MAX_DP,ALT_FLAG))
 	
 	# 4. Write final file
 	concatenate_sort_temp_files_and_write(out_file, tmp_dir)
