@@ -171,7 +171,7 @@ def variant_calling_step1(file,alpha1,beta1,alpha2,beta2,min_ac_cells,min_ac_rea
 							All_DPs[cell_type] = int(DP)
 							All_CCs[cell_type] = int(NC)
 
-							if (int(DP) >= min_cells and int(NC) >= min_reads):
+							if (int(DP) >= min_reads and int(NC) >= min_cells):
 								# Number of cell types with min_BC
 								Cell_types_min_BC = Cell_types_min_BC + 1
 								# Number of cell types with min_CC

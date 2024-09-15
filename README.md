@@ -53,7 +53,7 @@ The first step consists of splitting the BAM file containing aligned sequencing 
 Step 1 is executed using the script SplitBam/SplitBamCellTypes.py, which has the following parameters:
 
 - List of parameters:
-```
+```python
 python scripts/SplitBam/SplitBamCellTypes.py --help
 usage: SplitBamCellTypes.py [-h] --bam BAM --meta META [--id ID]
                             [--max_nM MAX_NM] [--max_NH MAX_NH]
@@ -112,7 +112,7 @@ Base count information for each cell type and for every position in the genome i
 The command line to run this step is: 
 
 - List of parameters:
-```
+```python
 python scripts/BaseCellCounter/BaseCellCounter.py --help
 usage: BaseCellCounter.py [-h] --bam BAM --ref REF --chrom CHROM
                                    [--out_folder OUT_FOLDER] [--id ID]
@@ -153,6 +153,9 @@ optional arguments:
                         Default = 20
   --min_mq MIN_MQ       Minimum mapping quality required to analyse read.
                         Default = 255
+  --max_dp MAX_DP       Maximum number of reads per genomic site that are read by pysam pileup,
+                        to save time and memory. Set this value to 0 to switch this filter off
+                        (recommended for high-depth sequencing). [Default: 8000]
   --tmp_dir TMP_DIR     Temporary folder for tmp files
 ```
 
