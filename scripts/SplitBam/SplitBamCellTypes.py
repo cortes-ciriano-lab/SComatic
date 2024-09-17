@@ -12,11 +12,12 @@ def meta_to_dict(txt,tissue):
 	metadata['Index_clean'] = metadata['Index'].str.replace('-.*$','',regex=True)
 
 	# If tissue provided, append tissue id to cell type to be recognised in downstream analysis
+	# Sanitise cell types as these will translate to file names later
 	if tissue == None:
-		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(' ','_',regex=True)
+		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(r'[^0-9a-zA-Z_]','_',regex=True)
 	else:
-		tissue = tissue.replace(" ", "_")
-		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(' ','_',regex=True)
+		tissue = tissue.replace(r'[^0-9a-zA-Z_]', "_")
+		metadata['Cell_type_clean'] = metadata['Cell_type'].str.replace(r'[^0-9a-zA-Z_]','_',regex=True)
 		metadata['Cell_type_clean'] = str(tissue) + '__' + metadata['Cell_type_clean'].astype(str)
 
 	# Create dicitionary with cell types and cell barcodes
@@ -28,7 +29,7 @@ def meta_to_dict(txt,tissue):
 	return(DICT, ALL_CELL_TYPES)
 
 
-def split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim):
+def split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim,flag_CB):
 
 	start = timeit.default_timer()
 
@@ -69,6 +70,10 @@ def split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim):
 			FILTER_dict[FILTER2] += 1
 			continue 
 
+		# Optionally prepend the sample ID to the CB tag
+		if flag_CB:
+			barcode = donor+"_"+barcode
+			read.set_tag("CB", barcode)
 
 		# Check if CB code matches with an annotated cell type
 		barcode = barcode.split("-")[0]
@@ -190,6 +195,7 @@ def initialize_parser():
 	parser.add_argument('--max_NH', type=int, default = None, help='Maximum number of alignment hits permitted to consider reads for analysis. By default, this filter is switched off, although we recommend using --max_NH 1. This filter requires having the NH tag in the bam file. [Default: Switched off]', required = False)
 	parser.add_argument('--min_MQ', type=int, default = 255, help='Minimum mapping quality required to consider reads for analysis. Set this value to 0 to switch this filter off. --min_MQ 255 is recommended for RNA data, and --min_MQ 30 for DNA data. [Default: 255]', required = False)
 	parser.add_argument('--n_trim', type=int, default = 0, help='Number of bases trimmed by setting the base quality to 0 at the beginning and end of each read [Default: 0]', required = False)
+	parser.add_argument('--flag_CB', action="store_true", help='If provided, prepends each CB: tag with the sample ID and an underscore. Potentially useful for processing multiple samples from the same donor in parallel. Expects the barcodes in the metadata file to match the form with the sample ID prepended.')
 	parser.add_argument('--outdir', default = '.', help='Out directory', required = False)
 	return (parser)
 
@@ -207,10 +213,11 @@ def main():
 	max_NM = args.max_nM
 	min_MAPQ = args.min_MQ
 	n_trim = args.n_trim
+	flag_CB = args.flag_CB
 	max_NH = args.max_NH
 
 	# 2. Split bam file
-	split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim)
+	split_bam(bam, txt, outdir,donor,tissue,max_NM,max_NH,min_MAPQ,n_trim,flag_CB)
 
 
 #-------------
