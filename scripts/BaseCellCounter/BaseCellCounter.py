@@ -91,8 +91,12 @@ def MakeWindows(CONTIG, FASTA, bed, bed_out, window):
 		a = pybedtools.BedTool(bed)
 	
 	# Focus only on the chromosome of interest (if provided)
-	if (CONTIG != 'all'):
-		a2 = a.filter(lambda b: b.chrom == CONTIG)
+	if CONTIG != 'all':
+		if ',' in CONTIG:
+			contigs = [c.strip() for c in CONTIG.split(',')]
+			a2 = a.filter(lambda b: b.chrom in contigs)
+		else:
+			a2 = a.filter(lambda b: b.chrom == CONTIG)
 	else:
 		a2 = a
 	

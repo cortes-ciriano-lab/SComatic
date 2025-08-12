@@ -130,7 +130,7 @@ optional arguments:
   --ref REF             Reference genome. *fai must be available in the same
                         folder as reference
   --chrom CHROM         Chromosome to be analysed. Use --chrom all to analyse
-                        all chromosomes
+                        all chromosomes. If there are multiple chromosomes as input, split with ","
   --out_folder OUT_FOLDER
                         Output folder
   --id ID               Prefix of out file. If provided, please use the following
